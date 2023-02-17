@@ -3,13 +3,15 @@ import 'package:flame/collisions.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
-import 'package:plantsvszombie/components/plant_component.dart';
+import 'package:plantsvszombie/components/plants/cactus_component.dart';
+import 'package:plantsvszombie/components/plants/peashooter_component.dart';
 
 class MyGame extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
   @override
   Future<void>? onLoad() {
-    add(PlantComponent());
+    add(PeashooterComponent());
+    add(CactusComponent());
     // var background = TileMapComponent();
     // add(background);
 
