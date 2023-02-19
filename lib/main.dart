@@ -5,13 +5,21 @@ import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:plantsvszombie/components/plants/cactus_component.dart';
 import 'package:plantsvszombie/components/plants/peashooter_component.dart';
+import 'package:plantsvszombie/maps/tile_map_component.dart';
 
 class MyGame extends FlameGame
-    with HasKeyboardHandlerComponents, HasCollisionDetection, TapDetector {
+    with
+        HasKeyboardHandlerComponents,
+        HasCollisionDetection,
+        HasTappables /*, TapDetector */ {
   @override
   Future<void>? onLoad() {
-    add(PeashooterComponent());
-    add(CactusComponent());
+    var background = TileMapComponent(game: this);
+
+    add(background);
+
+    // add(PeashooterComponent());
+    // add(CactusComponent());
     // var background = TileMapComponent();
     // add(background);
 
@@ -40,13 +48,17 @@ class MyGame extends FlameGame
     return Colors.purple;
   }
 
-  @override
-  bool onTapDown(TapDownInfo info) {
-    add(PeashooterComponent()
-      ..position =
-          Vector2(info.raw.localPosition.dx, info.raw.localPosition.dy));
-    return true;
+  void addPlant(Offset position) {
+    add(PeashooterComponent()..position = Vector2(position.dx, position.dy));
   }
+
+  // @override
+  // bool onTapDown(TapDownInfo info) {
+  //   add(PeashooterComponent()
+  //     ..position =
+  //         Vector2(info.raw.localPosition.dx, info.raw.localPosition.dy));
+  //   return true;
+  // }
 }
 
 void main() {

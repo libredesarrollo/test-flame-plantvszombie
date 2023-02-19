@@ -68,6 +68,7 @@ flutter:
     - assets/images/PlantShroom.png
     - assets/images/ZombieBalloon.png
     - assets/images/ZombiesJack.png
+    - assets/images/tile.png
     - assets/tiles/map.tmx
     - assets/tiles/map.tsx
 
