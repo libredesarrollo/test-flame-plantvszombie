@@ -13,7 +13,7 @@ class PlantComponent extends Plant {
 
   PlantComponent() : super() {
     debugMode = true;
-    scale = Vector2.all(2);
+    scale = Vector2.all(1);
     position = Vector2.all(200);
   }
 

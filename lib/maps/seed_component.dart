@@ -21,7 +21,12 @@ class SeedComponent extends PositionComponent with Tappable {
 
   @override
   bool onTapDown(TapDownInfo info) {
-    game.addPlant(info.raw.localPosition);
+    // game.addPlant(info.raw.localPosition);
+    Vector2 auxPos = position;
+    auxPos += size / 2;
+
+    // game.addPlant(auxPos);
+    game.addPlant(position);
     return true;
   }
 }

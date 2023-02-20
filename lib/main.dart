@@ -48,10 +48,14 @@ class MyGame extends FlameGame
     return Colors.purple;
   }
 
-  void addPlant(Offset position) {
-    add(PeashooterComponent()..position = Vector2(position.dx, position.dy));
-  }
+  // void addPlant(Offset position) {
+  void addPlant(Vector2 position) {
+    final p = CactusComponent()..position = Vector2(position.x, position.y);
 
+    // p.position = position - p.size;
+    add(p);
+    // add(CactusComponent()..position = Vector2(position.x, position.y));
+  }
   // @override
   // bool onTapDown(TapDownInfo info) {
   //   add(PeashooterComponent()
