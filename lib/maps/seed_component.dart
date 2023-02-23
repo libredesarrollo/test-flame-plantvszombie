@@ -26,7 +26,7 @@ class SeedComponent extends PositionComponent with Tappable {
     auxPos += size / 2;
 
     // game.addPlant(auxPos);
-    game.addPlant(position);
+    game.addPlant(position, size);
     return true;
   }
 }

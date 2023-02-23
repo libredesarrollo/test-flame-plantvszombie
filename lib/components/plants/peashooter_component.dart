@@ -7,10 +7,14 @@ import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
 import 'package:plantsvszombie/components/plants/plant_component.dart';
 
 class PeashooterComponent extends PlantComponent {
-  @override
-  Future<void>? onLoad() async {
+  PeashooterComponent() : super() {
     spriteSheetWidth = 27;
     spriteSheetHeight = 31;
+    size = Vector2(spriteSheetWidth, spriteSheetHeight);
+  }
+
+  @override
+  Future<void>? onLoad() async {
     final spriteImage = await Flame.images.load('PlantPeashooter.png');
 
     final spriteSheetIdle = SpriteSheet(
@@ -27,7 +31,6 @@ class PeashooterComponent extends PlantComponent {
         xInit: 1, yInit: 0, step: 3, sizeX: 8, stepTime: .2);
 
     animation = shootAnimation;
-    size = Vector2(spriteSheetWidth, spriteSheetHeight);
 
     // position = Vector2.all(300);
 
