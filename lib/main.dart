@@ -49,18 +49,14 @@ class MyGame extends FlameGame
   }
 
   // void addPlant(Offset position) {
-  void addPlant(Vector2 position, Vector2 size) {
-    final p = PeashooterComponent()..position = Vector2(position.x, position.y);
-
+  bool addPlant(Vector2 position, Vector2 size) {
+    //final p = PeashooterComponent()..position = Vector2(position.x, position.y);
+    final p = CactusComponent()..position = Vector2(position.x, position.y);
     final fac = size.y / p.size.y; //25 50 = 2
-    //p.size.y = size.y;
-
     p.size *= fac;
-
-    print(fac);
-
-    // p.position = position - p.size;
     add(p);
+
+    return true;
     // add(CactusComponent()..position = Vector2(position.x, position.y));
   }
   // @override

@@ -27,7 +27,7 @@ class TileMapComponent extends PositionComponent {
     //       position: Vector2(obj.x, obj.y)));
     // }
 
-    final objObs = tiledMap.tileMap.getLayer<ObjectGroup>("obstacles_object");
+    final objObs = tiledMap.tileMap.getLayer<ObjectGroup>("seed");
 
     for (final obj in objObs!.objects) {
       add(SeedComponent(
