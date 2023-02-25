@@ -5,6 +5,8 @@ import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:plantsvszombie/components/plants/cactus_component.dart';
 import 'package:plantsvszombie/components/plants/peashooter_component.dart';
+import 'package:plantsvszombie/components/zombies/zombie_component.dart';
+import 'package:plantsvszombie/components/zombies/zombie_cone_component.dart';
 import 'package:plantsvszombie/maps/tile_map_component.dart';
 
 class MyGame extends FlameGame
@@ -12,16 +14,13 @@ class MyGame extends FlameGame
         HasKeyboardHandlerComponents,
         HasCollisionDetection,
         HasTappables /*, TapDetector */ {
+  double elapsedTime = 0.0;
+  late TileMapComponent background;
+
   @override
   Future<void>? onLoad() {
-    var background = TileMapComponent(game: this);
-
+    background = TileMapComponent(game: this);
     add(background);
-
-    // add(PeashooterComponent());
-    // add(CactusComponent());
-    // var background = TileMapComponent();
-    // add(background);
 
     // background.loaded.then(
     //   (value) {
@@ -36,10 +35,24 @@ class MyGame extends FlameGame
     //     add(ZombieComponent(mapSize: background.tiledMap.size));
     //   },
     // );
-
+    add(ZombieConeComponent(position: Vector2(1200, 50)));
     add(ScreenHitbox());
 
     //return super.onLoad();
+  }
+
+  @override
+  void update(double dt) {
+    if (elapsedTime > 3.0) {
+      print(background.tiledMap.size.x);
+      add(ZombieConeComponent(
+          position: Vector2(background.tiledMap.size.x, 50)));
+      // add(ZombieConeComponent(position: Vector2(50, 50)));
+      elapsedTime = 0.0;
+    }
+
+    //elapsedTime += dt;
+    super.update(dt);
   }
 
   @override
