@@ -4,9 +4,8 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:plantsvszombie/components/plants/cactus_component.dart';
-import 'package:plantsvszombie/components/plants/peashooter_component.dart';
-import 'package:plantsvszombie/components/zombies/zombie_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_cone_component.dart';
+import 'package:plantsvszombie/components/zombies/zombie_door_component.dart';
 import 'package:plantsvszombie/maps/tile_map_component.dart';
 
 class MyGame extends FlameGame
@@ -35,7 +34,8 @@ class MyGame extends FlameGame
     //     add(ZombieComponent(mapSize: background.tiledMap.size));
     //   },
     // );
-    add(ZombieConeComponent(position: Vector2(1200, 50)));
+    add(ZombieConeComponent(position: Vector2(1200, 48 - 20)));
+    add(ZombieDoorComponent(position: Vector2(1200, 96 - 20)));
     add(ScreenHitbox());
 
     //return super.onLoad();

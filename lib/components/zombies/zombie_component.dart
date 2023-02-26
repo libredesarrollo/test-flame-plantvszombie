@@ -1,17 +1,8 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-import 'package:flame/sprite.dart';
-import 'package:plantsvszombie/components/plants/plant.dart';
-
-import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
-
-import 'dart:math';
-
 class ZombieComponent extends SpriteAnimationComponent {
   late SpriteAnimation walkingAnimation;
-
-  // double elapsedTime = 0;
 
   double speed = 12;
 
@@ -26,6 +17,7 @@ class ZombieComponent extends SpriteAnimationComponent {
 
   @override
   void update(double dt) {
+    position.add(Vector2(-dt * speed, 0));
     super.update(dt);
   }
 }
