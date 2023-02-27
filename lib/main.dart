@@ -7,6 +7,7 @@ import 'package:plantsvszombie/components/plants/cactus_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_cone_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_door_component.dart';
 import 'package:plantsvszombie/maps/tile_map_component.dart';
+import 'package:plantsvszombie/helpers/enemies/movements.dart';
 
 class MyGame extends FlameGame
     with
@@ -14,6 +15,7 @@ class MyGame extends FlameGame
         HasCollisionDetection,
         HasTappables /*, TapDetector */ {
   double elapsedTime = 0.0;
+  int zombieI = 0;
   late TileMapComponent background;
 
   @override
@@ -34,8 +36,13 @@ class MyGame extends FlameGame
     //     add(ZombieComponent(mapSize: background.tiledMap.size));
     //   },
     // );
-    add(ZombieConeComponent(position: Vector2(1200, 48 - 20)));
-    add(ZombieDoorComponent(position: Vector2(1200, 96 - 20)));
+
+    // add(SkeletonComponent(
+    //            mapSize: background.tiledMap.size,
+    //           movementTypes: e.movementEnemies,
+    //            typeEnemyMovement: e.typeEnemyMovement)..position=Vector2.all(50)));
+
+    //add(ZombieDoorComponent(position: Vector2(1200, 96 - 20)));
     add(ScreenHitbox());
 
     //return super.onLoad();
@@ -44,14 +51,26 @@ class MyGame extends FlameGame
   @override
   void update(double dt) {
     if (elapsedTime > 3.0) {
+      if (zombieI < enemiesMap1.length) {
+        if (enemiesMap1[zombieI].typeEnemy == TypeEnemy.zombie1) {
+          add(ZombieConeComponent(
+              position: Vector2(background.tiledMap.size.x,
+                  enemiesMap1[zombieI].position - 20)));
+        } else {
+          add(ZombieDoorComponent(
+              position: Vector2(background.tiledMap.size.x,
+                  enemiesMap1[zombieI].position - 20)));
+        }
+        zombieI++;
+      }
       print(background.tiledMap.size.x);
-      add(ZombieConeComponent(
-          position: Vector2(background.tiledMap.size.x, 50)));
+      // add(ZombieConeComponent(
+      //     position: Vector2(background.tiledMap.size.x, 50)));
       // add(ZombieConeComponent(position: Vector2(50, 50)));
       elapsedTime = 0.0;
     }
 
-    //elapsedTime += dt;
+    elapsedTime += dt;
     super.update(dt);
   }
 
