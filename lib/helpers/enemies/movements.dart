@@ -9,6 +9,10 @@ class BehaviorEnemy {
   BehaviorEnemy({required this.position, required this.typeEnemy});
 }
 
+//
+
+const channelsMap1 = 7;
+
 List<BehaviorEnemy> enemiesMap1 = [
   BehaviorEnemy(typeEnemy: TypeEnemy.zombie1, position: 4 * sizeTileMap),
   BehaviorEnemy(typeEnemy: TypeEnemy.zombie2, position: 1 * sizeTileMap),
@@ -20,55 +24,4 @@ List<BehaviorEnemy> enemiesMap1 = [
   BehaviorEnemy(typeEnemy: TypeEnemy.zombie2, position: 7 * sizeTileMap),
 ];
 
-
-
-/*
-
-
-enum TypeEnemyMovement { random, pattern }
-
-class BehaviorEnemy {
-  BehaviorEnemy(
-      {this.movementEnemies = const [],
-      required this.typeEnemyMovement,
-      required this.typeEnemy});
-
-  List<PlayerDirection> movementEnemies;
-  TypeEnemyMovement typeEnemyMovement;
-  TypeEnemy typeEnemy;
-}
-
-List<BehaviorEnemy> enemiesMap1 = [
-  BehaviorEnemy(
-      typeEnemyMovement: TypeEnemyMovement.random, typeEnemy: TypeEnemy.zombie),
-  BehaviorEnemy(
-      typeEnemyMovement: TypeEnemyMovement.random, typeEnemy: TypeEnemy.skeleton),
-  BehaviorEnemy(
-      typeEnemyMovement: TypeEnemyMovement.random, typeEnemy: TypeEnemy.zombie),
-  BehaviorEnemy(
-      typeEnemyMovement: TypeEnemyMovement.random, typeEnemy: TypeEnemy.skeleton),
-  BehaviorEnemy(
-      typeEnemyMovement: TypeEnemyMovement.random, typeEnemy: TypeEnemy.skeleton),
-  BehaviorEnemy(
-      typeEnemyMovement: TypeEnemyMovement.random, typeEnemy: TypeEnemy.zombie),
-  BehaviorEnemy(
-      typeEnemyMovement: TypeEnemyMovement.random, typeEnemy: TypeEnemy.skeleton),
-  BehaviorEnemy(
-      typeEnemyMovement: TypeEnemyMovement.pattern,
-      typeEnemy: TypeEnemy.zombie,
-      movementEnemies: [
-        PlayerDirection.right,
-        PlayerDirection.right,
-        PlayerDirection.down,
-        PlayerDirection.left,
-        PlayerDirection.down,
-        PlayerDirection.up,
-      ]),
-  BehaviorEnemy(
-      typeEnemyMovement: TypeEnemyMovement.pattern,
-      typeEnemy: TypeEnemy.skeleton,
-      movementEnemies: [
-        PlayerDirection.right,
-        PlayerDirection.left
-      ]),
-];*/
+List enemiesInChannel = List.generate(channelsMap1, (index) => false);

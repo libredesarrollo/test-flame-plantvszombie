@@ -4,6 +4,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:plantsvszombie/components/plants/cactus_component.dart';
+import 'package:plantsvszombie/components/zombies/zombie_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_cone_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_door_component.dart';
 import 'package:plantsvszombie/maps/tile_map_component.dart';
@@ -55,15 +56,15 @@ class MyGame extends FlameGame
         if (enemiesMap1[zombieI].typeEnemy == TypeEnemy.zombie1) {
           add(ZombieConeComponent(
               position: Vector2(background.tiledMap.size.x,
-                  enemiesMap1[zombieI].position - 20)));
+                  enemiesMap1[zombieI].position - alignZombie)));
         } else {
           add(ZombieDoorComponent(
               position: Vector2(background.tiledMap.size.x,
-                  enemiesMap1[zombieI].position - 20)));
+                  enemiesMap1[zombieI].position - alignZombie)));
         }
         zombieI++;
       }
-      print(background.tiledMap.size.x);
+      // print(background.tiledMap.size.x);
       // add(ZombieConeComponent(
       //     position: Vector2(background.tiledMap.size.x, 50)));
       // add(ZombieConeComponent(position: Vector2(50, 50)));

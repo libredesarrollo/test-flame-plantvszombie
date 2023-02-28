@@ -3,13 +3,18 @@ import 'package:flame/components.dart';
 
 import 'package:flame/sprite.dart';
 import 'package:plantsvszombie/components/plants/plant.dart';
+import 'package:plantsvszombie/helpers/enemies/movements.dart';
 
 import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
 
 import 'dart:math';
 
+enum State { idle, shoot }
+
 class PlantComponent extends Plant {
   double elapsedTime = 0;
+
+  State state = State.idle;
 
   PlantComponent() : super() {
     debugMode = true;
@@ -19,6 +24,23 @@ class PlantComponent extends Plant {
 
   @override
   void update(double dt) {
+    if (enemiesInChannel[(position.x / sizeTileMap).toInt()]) {
+      // hay enemigos en en canal
+      if (state != State.shoot) {
+        print('ataque');
+        animation = shootAnimation;
+      }
+      state = State.shoot;
+    } else {
+      if (state != State.idle) {
+        print('idle');
+        animation = idleAnimation;
+      }
+      state = State.idle;
+    }
+    print((position.x / sizeTileMap).toInt());
+    print(enemiesInChannel.toString());
+
     // elapsedTime += dt;
 
     // if (elapsedTime > 3.0) {

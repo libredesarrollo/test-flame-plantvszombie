@@ -29,7 +29,7 @@ class ZombieConeComponent extends ZombieComponent {
 
     size = Vector2(spriteSheetWidth, spriteSheetHeight);
 
-    body = RectangleHitbox()..collisionType = CollisionType.passive;
+    body = RectangleHitbox()..collisionType = CollisionType.active;
     add(body);
     return super.onLoad();
   }
