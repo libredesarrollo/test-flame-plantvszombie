@@ -65,6 +65,8 @@ flutter:
     - assets/images/PlantCabbage.png
     - assets/images/PlantPeashooter.png
     - assets/images/PlantCactus.png
+    - assets/images/PlantPeashooterProjectile.png
+    - assets/images/PlantCactusProjectile.png
     - assets/images/PlantShroom.png
     - assets/images/ZombieBalloon.png
     - assets/images/ZombiesJack.png

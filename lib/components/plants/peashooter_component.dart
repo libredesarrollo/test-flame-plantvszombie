@@ -2,6 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:plantsvszombie/components/plants/projectile_component.dart';
 import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
 
 import 'package:plantsvszombie/components/plants/plant_component.dart';
@@ -23,6 +24,9 @@ class PeashooterComponent extends PlantComponent {
     final spriteSheetShoot = SpriteSheet(
         image: spriteImage,
         srcSize: Vector2(spriteSheetWidth - 2, spriteSheetHeight));
+    final spriteSheetProjectile =
+        SpriteSheet(image: spriteImage, srcSize: Vector2(12, 14));
+    // SpriteSheet(image: spriteImage, srcSize: Vector2(15, 15));
 
     // init animation
     idleAnimation = spriteSheetIdle.createAnimationByLimit(
@@ -31,6 +35,9 @@ class PeashooterComponent extends PlantComponent {
         xInit: 1, yInit: 0, step: 3, sizeX: 8, stepTime: .2);
 
     animation = shootAnimation;
+
+    add(ProjectileComponent(
+        projectile: await Sprite.load('PlantPeashooterProjectile.png')));
 
     // position = Vector2.all(300);
 

@@ -16,6 +16,8 @@ class PlantComponent extends Plant {
 
   State state = State.idle;
 
+  late Sprite projectile;
+
   PlantComponent() : super() {
     debugMode = true;
     scale = Vector2.all(1);

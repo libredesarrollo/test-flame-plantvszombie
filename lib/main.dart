@@ -4,6 +4,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:plantsvszombie/components/plants/cactus_component.dart';
+import 'package:plantsvszombie/components/plants/peashooter_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_cone_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_door_component.dart';
@@ -83,8 +84,8 @@ class MyGame extends FlameGame
 
   // void addPlant(Offset position) {
   bool addPlant(Vector2 position, Vector2 size) {
-    //final p = PeashooterComponent()..position = Vector2(position.x, position.y);
-    final p = CactusComponent()..position = Vector2(position.x, position.y);
+    final p = PeashooterComponent()..position = Vector2(position.x, position.y);
+    //final p = CactusComponent()..position = Vector2(position.x, position.y);
     final fac = size.y / p.size.y; //25 50 = 2
     p.size *= fac;
     add(p);
