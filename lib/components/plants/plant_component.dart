@@ -24,22 +24,18 @@ class PlantComponent extends Plant {
 
   @override
   void update(double dt) {
-    if (enemiesInChannel[(position.x / sizeTileMap).toInt()]) {
+    if (enemiesInChannel[(position.y / sizeTileMap).toInt() - 1]) {
       // hay enemigos en en canal
       if (state != State.shoot) {
-        print('ataque');
         animation = shootAnimation;
       }
       state = State.shoot;
     } else {
       if (state != State.idle) {
-        print('idle');
         animation = idleAnimation;
       }
       state = State.idle;
     }
-    print((position.x / sizeTileMap).toInt());
-    print(enemiesInChannel.toString());
 
     // elapsedTime += dt;
 
