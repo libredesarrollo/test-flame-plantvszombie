@@ -3,6 +3,7 @@ import 'package:flame/components.dart';
 
 import 'package:flame/sprite.dart';
 import 'package:plantsvszombie/components/plants/plant.dart';
+import 'package:plantsvszombie/components/plants/projectile_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
 
 import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
@@ -25,11 +26,13 @@ class PlantComponent extends Plant {
   }
 
   @override
-  void update(double dt) {
+  void update(double dt) async {
     if (enemiesInChannel[(position.y / sizeTileMap).toInt() - 1]) {
       // hay enemigos en en canal
       if (state != State.shoot) {
         animation = shootAnimation;
+        // add(ProjectileComponent(
+        //     projectile: await Sprite.load('PlantPeashooterProjectile.png')));
       }
       state = State.shoot;
     } else {
@@ -69,4 +72,12 @@ class PlantComponent extends Plant {
 
   //   super.onCollisionEnd(other);
   // }
+
+  void shoot() {
+    shootAnimation.onComplete = () async {
+      add(ProjectileComponent(
+          projectile: await Sprite.load('PlantPeashooterProjectile.png')));
+      shootAnimation.reset();
+    };
+  }
 }

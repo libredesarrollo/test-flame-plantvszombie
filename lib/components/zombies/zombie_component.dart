@@ -1,5 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:plantsvszombie/components/plants/projectile_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
 import 'package:plantsvszombie/maps/seed_component.dart';
 
@@ -8,7 +9,7 @@ const double alignZombie = 20;
 class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
   late SpriteAnimation walkingAnimation;
 
-  double speed = 120;
+  double speed = 12;
 
   double spriteSheetWidth = 128, spriteSheetHeight = 128;
 
@@ -36,6 +37,11 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is SeedComponent) _setChannel(true);
+
+    if (other is ProjectileComponent) {
+      other.removeFromParent();
+    }
+
     super.onCollision(intersectionPoints, other);
   }
 
