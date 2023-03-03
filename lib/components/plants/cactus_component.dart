@@ -7,7 +7,7 @@ import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
 import 'package:plantsvszombie/components/plants/plant_component.dart';
 
 class CactusComponent extends PlantComponent {
-  CactusComponent() : super() {
+  CactusComponent({required sizeMap}) : super(sizeMap) {
     spriteSheetWidth = 39;
     spriteSheetHeight = 37;
     size = Vector2(spriteSheetWidth, spriteSheetHeight);
@@ -25,7 +25,7 @@ class CactusComponent extends PlantComponent {
     idleAnimation = spriteSheet.createAnimationByLimit(
         xInit: 0, yInit: 0, step: 4, sizeX: 6, stepTime: .2);
     shootAnimation = spriteSheet.createAnimationByLimit(
-        xInit: 0, yInit: 4, step: 2, sizeX: 6, stepTime: .2);
+        xInit: 0, yInit: 4, step: 2, sizeX: 6, stepTime: .2, loop: false);
 
     animation = idleAnimation;
 

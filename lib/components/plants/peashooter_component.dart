@@ -7,7 +7,8 @@ import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
 import 'package:plantsvszombie/components/plants/plant_component.dart';
 
 class PeashooterComponent extends PlantComponent {
-  PeashooterComponent() : super() {
+  //Vector2 sizeMap;
+  PeashooterComponent({required sizeMap}) : super(sizeMap) {
     spriteSheetWidth = 27;
     spriteSheetHeight = 31;
     size = Vector2(spriteSheetWidth, spriteSheetHeight);
@@ -23,8 +24,7 @@ class PeashooterComponent extends PlantComponent {
     final spriteSheetShoot = SpriteSheet(
         image: spriteImage,
         srcSize: Vector2(spriteSheetWidth - 2, spriteSheetHeight));
-    final spriteSheetProjectile =
-        SpriteSheet(image: spriteImage, srcSize: Vector2(12, 14));
+
     // SpriteSheet(image: spriteImage, srcSize: Vector2(15, 15));
 
     // init animation
@@ -33,7 +33,7 @@ class PeashooterComponent extends PlantComponent {
     shootAnimation = spriteSheetShoot.createAnimationByLimit(
         xInit: 1, yInit: 0, step: 3, sizeX: 8, stepTime: .4, loop: false);
 
-    shoot();
+    shoot('PlantPeashooterProjectile.png');
 
     animation = idleAnimation;
 

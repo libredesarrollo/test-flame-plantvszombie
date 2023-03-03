@@ -18,8 +18,9 @@ class PlantComponent extends Plant {
   State state = State.idle;
 
   late Sprite projectile;
+  Vector2 sizeMap;
 
-  PlantComponent() : super() {
+  PlantComponent(this.sizeMap) : super() {
     debugMode = true;
     scale = Vector2.all(1);
     position = Vector2.all(200);
@@ -73,10 +74,10 @@ class PlantComponent extends Plant {
   //   super.onCollisionEnd(other);
   // }
 
-  void shoot() {
+  void shoot(String sprite) {
     shootAnimation.onComplete = () async {
       add(ProjectileComponent(
-          projectile: await Sprite.load('PlantPeashooterProjectile.png')));
+          projectile: await Sprite.load(sprite), sizeMap: sizeMap));
       shootAnimation.reset();
     };
   }
