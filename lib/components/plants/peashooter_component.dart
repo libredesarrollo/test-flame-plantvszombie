@@ -33,7 +33,7 @@ class PeashooterComponent extends PlantComponent {
     shootAnimation = spriteSheetShoot.createAnimationByLimit(
         xInit: 1, yInit: 0, step: 3, sizeX: 8, stepTime: .4, loop: false);
 
-    shoot('PlantPeashooterProjectile.png', Vector2(27, 2), damage);
+    shoot('PlantPeashooterProjectile.png', Vector2(27, 2));
 
     animation = idleAnimation;
 

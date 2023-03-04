@@ -20,6 +20,10 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
   int life = 100;
   int damage = 20;
 
+  bool isAttacking = false;
+  bool attack = false;
+  double elapsedTimeAttaking = 0;
+
   ZombieComponent(position) : super(position: position) {
     debugMode = true;
     scale = Vector2.all(1);
@@ -27,7 +31,7 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
 
   @override
   void update(double dt) {
-    position.add(Vector2(-dt * speed, 0));
+    if (!isAttacking) position.add(Vector2(-dt * speed, 0));
 
     if (position.x <= -size.x) {
       //print(position.x.toString());
@@ -36,6 +40,14 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
       _setChannel(false);
       removeFromParent();
     }
+
+    if (elapsedTimeAttaking > 2) {
+      elapsedTimeAttaking = 0.0;
+      attack = true;
+    }
+
+    elapsedTimeAttaking += dt;
+
     super.update(dt);
   }
 
@@ -52,23 +64,45 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
     }
 
     if (other is CactusComponent) {
-      other.life -= damage;
-      other.removeFromParent();
+      isAttacking = true;
+      if (attack) {
+        attack = false;
+        other.life -= damage;
+        if (other.life <= 0) {
+          other.removeFromParent();
+        }
+      }
     }
 
     if (other is PeashooterComponent) {
-      other.life -= damage;
-      other.removeFromParent();
+      isAttacking = true;
+      if (attack) {
+        print('atacando' + other.life.toString());
+        attack = false;
+        other.life -= damage;
+        if (other.life <= 0) {
+          other.removeFromParent();
+        }
+      }
     }
 
     super.onCollision(intersectionPoints, other);
   }
 
-  // @override
-  // void onCollisionEnd(PositionComponent other) {
-  //   if (other is SeedComponent) _setChannel(false);
-  //   super.onCollisionEnd(other);
-  // }
+  @override
+  void onRemove() {
+    _setChannel(false);
+    super.onRemove();
+  }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    if (other is PeashooterComponent || other is CactusComponent) {
+      isAttacking = false;
+      attack = false;
+    }
+    super.onCollisionEnd(other);
+  }
 
   _setChannel(bool value) {
     if (position.y + alignZombie == 48) {

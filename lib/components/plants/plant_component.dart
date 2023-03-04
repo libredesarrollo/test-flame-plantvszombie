@@ -77,7 +77,7 @@ class PlantComponent extends Plant {
   //   super.onCollisionEnd(other);
   // }
 
-  void shoot(String sprite, Vector2 position, int damage) {
+  void shoot(String sprite, Vector2 position) {
     shootAnimation.onComplete = () async {
       add(ProjectileComponent(
           projectile: await Sprite.load(sprite),
