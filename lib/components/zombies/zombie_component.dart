@@ -46,6 +46,9 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
     if (other is ProjectileComponent) {
       other.removeFromParent();
       life -= other.damage;
+      if (life <= 0) {
+        removeFromParent();
+      }
     }
 
     if (other is CactusComponent) {
@@ -56,10 +59,6 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
     if (other is PeashooterComponent) {
       other.life -= damage;
       other.removeFromParent();
-    }
-
-    if (life <= 0) {
-      removeFromParent();
     }
 
     super.onCollision(intersectionPoints, other);
