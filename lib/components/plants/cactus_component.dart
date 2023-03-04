@@ -15,6 +15,8 @@ class CactusComponent extends PlantComponent {
 
   @override
   Future<void>? onLoad() async {
+    damage = 100;
+
     final spriteImage = await Flame.images.load('PlantCactus.png');
 
     final spriteSheet = SpriteSheet(
@@ -26,7 +28,7 @@ class CactusComponent extends PlantComponent {
         xInit: 0, yInit: 0, step: 4, sizeX: 6, stepTime: .2);
     shootAnimation = spriteSheet.createAnimationByLimit(
         xInit: 0, yInit: 4, step: 2, sizeX: 6, stepTime: .2, loop: false);
-
+    shoot('PlantCactusProjectile.png', Vector2(spriteSheetWidth, 12), damage);
     animation = idleAnimation;
 
     body = RectangleHitbox(

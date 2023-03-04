@@ -6,16 +6,21 @@ class ProjectileComponent extends SpriteComponent {
   final double speed;
   final Vector2 sizeMap;
 
+  int damage;
+
   ProjectileComponent(
-      {required this.projectile, required this.sizeMap, this.speed = 120})
-      : super(size: Vector2.all(20), sprite: projectile) {
+      {required this.projectile,
+      required this.sizeMap,
+      position,
+      this.damage = 10,
+      this.speed = 120})
+      : super(size: Vector2.all(20), sprite: projectile, position: position) {
     add(RectangleHitbox());
   }
 
   @override
   void update(double dt) {
     position.add(Vector2(dt * speed, 0));
-    print(sizeMap.x.toString() + " " + position.x.toString());
     if (position.x >= sizeMap.x) {
       removeFromParent();
     }

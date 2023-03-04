@@ -1,5 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:plantsvszombie/components/plants/cactus_component.dart';
+import 'package:plantsvszombie/components/plants/peashooter_component.dart';
 import 'package:plantsvszombie/components/plants/projectile_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
 import 'package:plantsvszombie/maps/seed_component.dart';
@@ -14,6 +16,9 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
   double spriteSheetWidth = 128, spriteSheetHeight = 128;
 
   late RectangleHitbox body;
+
+  int life = 100;
+  int damage = 20;
 
   ZombieComponent(position) : super(position: position) {
     debugMode = true;
@@ -40,6 +45,21 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
 
     if (other is ProjectileComponent) {
       other.removeFromParent();
+      life -= other.damage;
+    }
+
+    if (other is CactusComponent) {
+      other.life -= damage;
+      other.removeFromParent();
+    }
+
+    if (other is PeashooterComponent) {
+      other.life -= damage;
+      other.removeFromParent();
+    }
+
+    if (life <= 0) {
+      removeFromParent();
     }
 
     super.onCollision(intersectionPoints, other);

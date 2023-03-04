@@ -20,6 +20,9 @@ class PlantComponent extends Plant {
   late Sprite projectile;
   Vector2 sizeMap;
 
+  int life = 100;
+  int damage = 10;
+
   PlantComponent(this.sizeMap) : super() {
     debugMode = true;
     scale = Vector2.all(1);
@@ -74,10 +77,13 @@ class PlantComponent extends Plant {
   //   super.onCollisionEnd(other);
   // }
 
-  void shoot(String sprite) {
+  void shoot(String sprite, Vector2 position, int damage) {
     shootAnimation.onComplete = () async {
       add(ProjectileComponent(
-          projectile: await Sprite.load(sprite), sizeMap: sizeMap));
+          projectile: await Sprite.load(sprite),
+          sizeMap: sizeMap,
+          position: position,
+          damage: damage));
       shootAnimation.reset();
     };
   }
