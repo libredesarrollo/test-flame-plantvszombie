@@ -23,6 +23,10 @@ class ZombieDoorComponent extends ZombieComponent {
 
     walkingAnimation = spriteSheet.createAnimationByLimit(
         xInit: 0, yInit: 0, step: 6, sizeX: 19, stepTime: .2);
+    eatingAnimation = spriteSheet.createAnimationByLimit(
+        xInit: 0, yInit: 0, step: 6, sizeX: 19, stepTime: .2);
+    walkingHurtAnimation = spriteSheet.createAnimationByLimit(
+        xInit: 2, yInit: 4, step: 6, sizeX: 19, stepTime: .2);
     // walkingAnimation = spriteSheet.createAnimationByLimit(
     //     xInit: 0, yInit: 5, step: 6, sizeX: 19, stepTime: .2);
 

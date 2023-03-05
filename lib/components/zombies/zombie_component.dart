@@ -9,7 +9,7 @@ import 'package:plantsvszombie/maps/seed_component.dart';
 const double alignZombie = 20;
 
 class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
-  late SpriteAnimation walkingAnimation;
+  late SpriteAnimation walkingAnimation, walkingHurtAnimation, eatingAnimation;
 
   double speed = 12;
 
@@ -52,12 +52,25 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
   }
 
   @override
+  void onCollisionStart(
+      Set<Vector2> intersectionPoints, PositionComponent other) {
+    if (other is CactusComponent || other is PeashooterComponent) {
+      animation = eatingAnimation;
+    }
+
+    super.onCollisionStart(intersectionPoints, other);
+  }
+
+  @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is SeedComponent) _setChannel(true);
 
     if (other is ProjectileComponent) {
       other.removeFromParent();
       life -= other.damage;
+      if (life <= 50) {
+        animation = walkingHurtAnimation;
+      }
       if (life <= 0) {
         removeFromParent();
       }
@@ -100,6 +113,11 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
     if (other is PeashooterComponent || other is CactusComponent) {
       isAttacking = false;
       attack = false;
+      if (life <= 50) {
+        animation = walkingHurtAnimation;
+      } else {
+        animation = walkingAnimation;
+      }
     }
     super.onCollisionEnd(other);
   }

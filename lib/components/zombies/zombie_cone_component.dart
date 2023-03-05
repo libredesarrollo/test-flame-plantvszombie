@@ -9,6 +9,7 @@ class ZombieConeComponent extends ZombieComponent {
   ZombieConeComponent({required position}) : super(position) {
     // spriteSheetWidth = 29.2;
     spriteSheetWidth = 27.6;
+    //spriteSheetWidth = 28.6;
     spriteSheetHeight = 55.5;
     size = Vector2(spriteSheetWidth, spriteSheetHeight);
     speed = 15;
@@ -24,6 +25,10 @@ class ZombieConeComponent extends ZombieComponent {
 
     walkingAnimation = spriteSheet.createAnimationByLimit(
         xInit: 0, yInit: 5, step: 6, sizeX: 19, stepTime: .2);
+    eatingAnimation = spriteSheet.createAnimationByLimit(
+        xInit: 0, yInit: 12, step: 6, sizeX: 19, stepTime: .2);
+    walkingHurtAnimation = spriteSheet.createAnimationByLimit(
+        xInit: 1, yInit: 5, step: 6, sizeX: 19, stepTime: .2);
 
     animation = walkingAnimation;
 
