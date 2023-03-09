@@ -8,6 +8,7 @@ import 'package:plantsvszombie/main.dart';
 class SeedComponent extends PositionComponent with Tappable {
   MyGame game;
   bool sown = false;
+  bool busy = false;
 
   SeedComponent({required size, required position, required this.game})
       : super(size: size, position: position) {
@@ -22,7 +23,7 @@ class SeedComponent extends PositionComponent with Tappable {
 
   @override
   bool onTapDown(TapDownInfo info) {
-    if (!sown) {
+    if (!sown & !busy) {
       // game.addPlant(info.raw.localPosition);
       Vector2 auxPos = position;
       auxPos += size / 2;

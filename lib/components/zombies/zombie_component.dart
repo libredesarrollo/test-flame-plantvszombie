@@ -63,7 +63,10 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
 
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    if (other is SeedComponent) _setChannel(true);
+    if (other is SeedComponent) {
+      other.busy = true;
+      _setChannel(true);
+    }
 
     if (other is ProjectileComponent) {
       other.removeFromParent();
@@ -110,6 +113,10 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
 
   @override
   void onCollisionEnd(PositionComponent other) {
+    if (other is SeedComponent) {
+      other.busy = false;
+    }
+
     if (other is PeashooterComponent || other is CactusComponent) {
       isAttacking = false;
       attack = false;
