@@ -6,7 +6,7 @@ import 'package:plantsvszombie/components/plants/projectile_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
 import 'package:plantsvszombie/maps/seed_component.dart';
 
-const double alignZombie = 20;
+const double alignZombie = 10;
 
 class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
   late SpriteAnimation walkingAnimation, walkingHurtAnimation, eatingAnimation;

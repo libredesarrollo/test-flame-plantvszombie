@@ -11,6 +11,7 @@ import 'package:plantsvszombie/components/zombies/zombie_door_component.dart';
 import 'package:plantsvszombie/maps/tile_map_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
 
+
 class MyGame extends FlameGame
     with
         HasKeyboardHandlerComponents,

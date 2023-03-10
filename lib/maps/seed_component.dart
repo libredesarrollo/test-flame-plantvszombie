@@ -12,7 +12,7 @@ class SeedComponent extends PositionComponent with Tappable {
 
   SeedComponent({required size, required position, required this.game})
       : super(size: size, position: position) {
-    debugMode = true;
+    debugMode = false;
     add(RectangleHitbox()..collisionType = CollisionType.active);
   }
 

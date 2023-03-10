@@ -34,10 +34,11 @@ class ZombieDoorComponent extends ZombieComponent {
 
     size = Vector2(spriteSheetWidth, spriteSheetHeight);
 
-    body = RectangleHitbox(
-        size: Vector2(spriteSheetWidth, spriteSheetHeight - alignZombie))
-      ..collisionType = CollisionType.active;
-    add(body);
+  body = RectangleHitbox(
+  position: Vector2(0, 0),
+    size: Vector2(spriteSheetWidth, spriteSheetHeight - alignZombie))
+  ..collisionType = CollisionType.active;
+add(body);
     return super.onLoad();
   }
 }
