@@ -2,7 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 import 'package:flame/sprite.dart';
-import 'package:plantsvszombie/components/plants/plant.dart';
+
 import 'package:plantsvszombie/components/plants/projectile_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
 
@@ -12,7 +12,16 @@ import 'dart:math';
 
 enum State { idle, shoot }
 
-class PlantComponent extends Plant {
+enum Plants { peaschooter, captus }
+
+class PlantComponent extends SpriteAnimationComponent
+    with KeyboardHandler, CollisionCallbacks {
+  double spriteSheetWidth = 128, spriteSheetHeight = 128;
+
+  late SpriteAnimation idleAnimation, shootAnimation;
+
+  late RectangleHitbox body;
+
   double elapsedTime = 0;
 
   State state = State.idle;

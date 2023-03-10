@@ -3,14 +3,18 @@ import 'package:flame/collisions.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
+
 import 'package:plantsvszombie/components/plants/cactus_component.dart';
 import 'package:plantsvszombie/components/plants/peashooter_component.dart';
+import 'package:plantsvszombie/components/plants/plant_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_cone_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_door_component.dart';
 import 'package:plantsvszombie/maps/tile_map_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
-
+import 'package:plantsvszombie/overlay/stadistics_overlay.dart';
+import 'package:plantsvszombie/overlay/game_over_overlay.dart';
+import 'package:plantsvszombie/overlay/plant_overlay.dart';
 
 class MyGame extends FlameGame
     with
@@ -20,6 +24,8 @@ class MyGame extends FlameGame
   double elapsedTime = 0.0;
   int zombieI = 0;
   late TileMapComponent background;
+
+  Plants plantSelected = Plants.peaschooter;
 
   @override
   Future<void>? onLoad() {
@@ -85,8 +91,15 @@ class MyGame extends FlameGame
 
   // void addPlant(Offset position) {
   bool addPlant(Vector2 position, Vector2 size) {
-    final p = PeashooterComponent(sizeMap: background.tiledMap.size)
-      ..position = Vector2(position.x, position.y);
+    PlantComponent p;
+    if (plantSelected == Plants.peaschooter) {
+      p = PeashooterComponent(sizeMap: background.tiledMap.size)
+        ..position = Vector2(position.x, position.y);
+    } else {
+      p = CactusComponent(sizeMap: background.tiledMap.size)
+        ..position = Vector2(position.x, position.y);
+    }
+
     //final p = CactusComponent(sizeMap: background.tiledMap.size)..position = Vector2(position.x, position.y);
     final fac = size.y / p.size.y; //25 50 = 2
     p.size *= fac;
@@ -102,10 +115,32 @@ class MyGame extends FlameGame
   //         Vector2(info.raw.localPosition.dx, info.raw.localPosition.dy));
   //   return true;
   // }
+
+  setPlantSelected(Plants plant) {
+    plantSelected = plant;
+  }
 }
 
 void main() {
   runApp(GameWidget(
     game: MyGame(),
+    overlayBuilderMap: {
+      'Statistics': (context, MyGame game) {
+        return StatisticsOverlay(
+          game: game,
+        );
+      },
+      'Plant': (context, MyGame game) {
+        return PlantOverlay(
+          game: game,
+        );
+      },
+      'GameOver': (context, MyGame game) {
+        return GameOverOverlay(
+          game: game,
+        );
+      }
+    },
+    initialActiveOverlays: const ['Plant'],
   ));
 }
