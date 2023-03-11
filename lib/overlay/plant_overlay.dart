@@ -30,18 +30,46 @@ class _PlantOverlayState extends State<PlantOverlay> {
                           .setPlantSelected(PlantComponent.Plants.peaschooter);
                     });
                   },
-                  child: Image.asset(
-                    'assets/images/peashooter.png',
-                    width: 50,
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: widget.game.plantSelected ==
+                                      PlantComponent.Plants.peaschooter
+                                  ? 5
+                                  : 0,
+                              color: Colors.blueGrey)),
+                      child: Image.asset(
+                        'assets/images/peashooter.png',
+                        width: 50,
+                      ),
+                    ),
                   )),
-              GestureDetector(
-                  onTap: () {
-                    widget.game.setPlantSelected(PlantComponent.Plants.captus);
-                  },
-                  child: Image.asset(
-                    'assets/images/cactus.png',
-                    width: 50,
-                  )),
+              const SizedBox(
+                width: 5,
+              ),
+              Opacity(
+                opacity: 0.5,
+                child: Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                          width: widget.game.plantSelected ==
+                                  PlantComponent.Plants.captus
+                              ? 5
+                              : 0,
+                          color: Colors.blueGrey)),
+                  child: GestureDetector(
+                      onTap: () {
+                        widget.game
+                            .setPlantSelected(PlantComponent.Plants.captus);
+                      },
+                      child: Image.asset(
+                        'assets/images/cactus.png',
+                        width: 50,
+                      )),
+                ),
+              ),
             ],
           ),
           // Row(

@@ -118,6 +118,8 @@ class MyGame extends FlameGame
 
   setPlantSelected(Plants plant) {
     plantSelected = plant;
+    overlays.remove('Plant');
+    overlays.add('Plant');
   }
 }
 
