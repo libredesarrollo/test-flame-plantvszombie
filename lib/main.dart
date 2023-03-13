@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:plantsvszombie/components/plants/cactus_component.dart';
 import 'package:plantsvszombie/components/plants/peashooter_component.dart';
 import 'package:plantsvszombie/components/plants/plant_component.dart';
+import 'package:plantsvszombie/components/plants/sun_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_cone_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_door_component.dart';
@@ -22,6 +23,7 @@ class MyGame extends FlameGame
         HasCollisionDetection,
         HasTappables /*, TapDetector */ {
   double elapsedTime = 0.0;
+  double elapsedTimeSun = 600.0;
   int zombieI = 0;
   late TileMapComponent background;
 
@@ -59,7 +61,14 @@ class MyGame extends FlameGame
 
   @override
   void update(double dt) {
-    if (elapsedTime > 3.0) {
+    if (elapsedTimeSun > 500.0) {
+      add(SunComponent());
+      elapsedTimeSun = 0.0;
+    }
+
+    elapsedTimeSun += dt;
+
+    if (elapsedTime > 5.0) {
       if (zombieI < enemiesMap1.length) {
         if (enemiesMap1[zombieI].typeEnemy == TypeEnemy.zombie1) {
           add(ZombieConeComponent(
