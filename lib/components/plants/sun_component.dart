@@ -20,7 +20,7 @@ class SunComponent extends SpriteAnimationComponent with CollisionCallbacks {
   static const double circleWidth = 26, circleHeight = 26;
 
   final double spriteSheetWidth = 26, spriteSheetHeight = 26;
-  double count = 0;
+  double countSin = 0;
   Random random = Random();
 
   late double screenWidth, screenHeight;
@@ -56,10 +56,11 @@ class SunComponent extends SpriteAnimationComponent with CollisionCallbacks {
   void update(double dt) {
     super.update(dt);
 
-    position.y += circleSpeed * dt;
-    print(position.y);
-    count += 0.1;
-    position.x += sin(count) * 5;
+    // position.y += circleSpeed * dt;
+    // print(position.y);
+    countSin += 0.1;
+    // position.x += sin(countSin) * 5;
+    position = Vector2( sin(countSin) * 5, circleSpeed * dt)
     super.update(dt);
     if (position.y > screenHeight) {
       removeFromParent();
