@@ -101,7 +101,6 @@ class MyGame extends FlameGame
 
   addSun(int sun) {
     suns += sun;
-    print(suns);
   }
 
   // void addPlant(Offset position) {
