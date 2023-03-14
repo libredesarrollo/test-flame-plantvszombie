@@ -74,7 +74,7 @@ class SunComponent extends SpriteAnimationComponent with Tappable {
   @override
   bool onTapDown(TapDownInfo info) {
     removeFromParent();
-    game.addSun(5);
+    game.addSuns(5);
     return false;
   }
 

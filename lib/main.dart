@@ -16,6 +16,7 @@ import 'package:plantsvszombie/helpers/enemies/movements.dart';
 import 'package:plantsvszombie/overlay/stadistics_overlay.dart';
 import 'package:plantsvszombie/overlay/game_over_overlay.dart';
 import 'package:plantsvszombie/overlay/plant_overlay.dart';
+import 'package:plantsvszombie/overlay/sun_overlay.dart';
 
 class MyGame extends FlameGame
     with
@@ -99,8 +100,22 @@ class MyGame extends FlameGame
     return Colors.purple;
   }
 
-  addSun(int sun) {
+  addSuns(int sun) {
     suns += sun;
+    _refreshOverlaySun();
+  }
+
+  bool removeSuns(int sun) {
+    if (suns - sun >= 0) {
+      suns -= sun;
+      _refreshOverlaySun();
+    }
+    return suns - sun >= 0;
+  }
+
+  _refreshOverlaySun() {
+    overlays.remove('Sun');
+    overlays.add('Sun');
   }
 
   // void addPlant(Offset position) {
@@ -151,12 +166,17 @@ void main() {
           game: game,
         );
       },
+      'Sun': (context, MyGame game) {
+        return SunOverlay(
+          game: game,
+        );
+      },
       'GameOver': (context, MyGame game) {
         return GameOverOverlay(
           game: game,
         );
       }
     },
-    initialActiveOverlays: const ['Plant'],
+    initialActiveOverlays: const ['Plant', 'Sun'],
   ));
 }
