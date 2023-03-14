@@ -22,6 +22,7 @@ class MyGame extends FlameGame
         HasKeyboardHandlerComponents,
         HasCollisionDetection,
         HasTappables /*, TapDetector */ {
+  int suns = 50;
   double elapsedTime = 0.0;
   double elapsedTimeSun = 600.0;
   int zombieI = 0;
@@ -61,8 +62,8 @@ class MyGame extends FlameGame
 
   @override
   void update(double dt) {
-    if (elapsedTimeSun > 500.0) {
-      add(SunComponent());
+    if (elapsedTimeSun > 5.0) {
+      add(SunComponent(game: this));
       elapsedTimeSun = 0.0;
     }
 
@@ -96,6 +97,11 @@ class MyGame extends FlameGame
   Color backgroundColor() {
     super.backgroundColor();
     return Colors.purple;
+  }
+
+  addSun(int sun) {
+    suns += sun;
+    print(suns);
   }
 
   // void addPlant(Offset position) {
