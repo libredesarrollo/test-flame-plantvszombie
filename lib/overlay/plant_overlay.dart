@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plantsvszombie/main.dart';
-import 'package:plantsvszombie/components/plants/plant_component.dart'
-    as PlantComponent;
+import 'package:plantsvszombie/components/plants/plant_component.dart' as pc;
 
 class PlantOverlay extends StatefulWidget {
   final MyGame game;
@@ -26,17 +25,19 @@ class _PlantOverlayState extends State<PlantOverlay> {
                   onTap: () {
                     //widget.game.paused = !widget.game.paused;
                     setState(() {
-                      widget.game
-                          .setPlantSelected(PlantComponent.Plants.peaschooter);
+                      widget.game.setPlantSelected(pc.Plants.peaschooter);
                     });
                   },
                   child: Opacity(
-                    opacity: 0.5,
+                    opacity: pc.PlantCost.cost(pc.Plants.peaschooter) <=
+                            widget.game.suns
+                        ? 1
+                        : 0.5,
                     child: Container(
                       decoration: BoxDecoration(
                           border: Border.all(
                               width: widget.game.plantSelected ==
-                                      PlantComponent.Plants.peaschooter
+                                      pc.Plants.peaschooter
                                   ? 5
                                   : 0,
                               color: Colors.blueGrey)),
@@ -50,19 +51,19 @@ class _PlantOverlayState extends State<PlantOverlay> {
                 width: 5,
               ),
               Opacity(
-                opacity: 0.5,
+                opacity: pc.PlantCost.cost(pc.Plants.captus) <= widget.game.suns
+                    ? 1
+                    : 0.5,
                 child: Container(
                   decoration: BoxDecoration(
                       border: Border.all(
-                          width: widget.game.plantSelected ==
-                                  PlantComponent.Plants.captus
+                          width: widget.game.plantSelected == pc.Plants.captus
                               ? 5
                               : 0,
                           color: Colors.blueGrey)),
                   child: GestureDetector(
                       onTap: () {
-                        widget.game
-                            .setPlantSelected(PlantComponent.Plants.captus);
+                        widget.game.setPlantSelected(pc.Plants.captus);
                       },
                       child: Image.asset(
                         'assets/images/cactus.png',

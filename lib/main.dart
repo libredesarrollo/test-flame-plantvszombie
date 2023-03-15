@@ -109,8 +109,9 @@ class MyGame extends FlameGame
     if (suns - sun >= 0) {
       suns -= sun;
       _refreshOverlaySun();
+      return true;
     }
-    return suns - sun >= 0;
+    return false;
   }
 
   _refreshOverlaySun() {
@@ -118,9 +119,13 @@ class MyGame extends FlameGame
     overlays.add('Sun');
   }
 
-  // void addPlant(Offset position) {
   bool addPlant(Vector2 position, Vector2 size) {
     PlantComponent p;
+
+    if (!removeSuns(PlantCost.cost(plantSelected))) {
+      return false;
+    }
+
     if (plantSelected == Plants.peaschooter) {
       p = PeashooterComponent(sizeMap: background.tiledMap.size)
         ..position = Vector2(position.x, position.y);

@@ -14,6 +14,20 @@ enum State { idle, shoot }
 
 enum Plants { peaschooter, captus }
 
+class PlantCost {
+  static const peaschooter = 20;
+  static const cactus = 30;
+
+  static int cost(Plants plant) {
+    switch (plant) {
+      case Plants.peaschooter:
+        return peaschooter;
+      case Plants.captus:
+        return cactus;
+    }
+  }
+}
+
 class PlantComponent extends SpriteAnimationComponent
     with KeyboardHandler, CollisionCallbacks {
   double spriteSheetWidth = 128, spriteSheetHeight = 128;
