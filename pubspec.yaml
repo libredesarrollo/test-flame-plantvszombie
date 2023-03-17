@@ -75,6 +75,7 @@ flutter:
     - assets/images/ZombieBalloon.png
     - assets/images/ZombiesJack.png
     - assets/images/ZombieCone.png
+    - assets/images/ZombieConeFinal.png
     - assets/images/ZombieDoor.png
     - assets/images/tile.png
     - assets/tiles/map.tmx
