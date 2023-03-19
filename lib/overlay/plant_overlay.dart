@@ -11,6 +11,8 @@ class PlantOverlay extends StatefulWidget {
 }
 
 class _PlantOverlayState extends State<PlantOverlay> {
+  double widthPlant1 = 50;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,24 +30,35 @@ class _PlantOverlayState extends State<PlantOverlay> {
                       widget.game.setPlantSelected(pc.Plants.peaschooter);
                     });
                   },
-                  child: Opacity(
-                    opacity: pc.PlantCost.cost(pc.Plants.peaschooter) <=
-                            widget.game.suns
-                        ? 1
-                        : 0.5,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: widget.game.plantSelected ==
-                                      pc.Plants.peaschooter
-                                  ? 5
-                                  : 0,
-                              color: Colors.blueGrey)),
-                      child: Image.asset(
-                        'assets/images/peashooter.png',
-                        width: 50,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Opacity(
+                        opacity: pc.PlantCost.cost(pc.Plants.peaschooter) <=
+                                widget.game.suns
+                            ? 1
+                            : 0.5,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                  width: widget.game.plantSelected ==
+                                          pc.Plants.peaschooter
+                                      ? 5
+                                      : 0,
+                                  color: Colors.blueGrey)),
+                          child: Image.asset(
+                            'assets/images/peashooter.png',
+                            width: 50,
+                          ),
+                        ),
                       ),
-                    ),
+                      AnimatedContainer(
+                        duration: const Duration(seconds: 2),
+                        width: 60,
+                        height: 30, //55,
+                        color: const Color.fromARGB(80, 255, 255, 255),
+                      )
+                    ],
                   )),
               const SizedBox(
                 width: 5,
@@ -67,7 +80,7 @@ class _PlantOverlayState extends State<PlantOverlay> {
                       },
                       child: Image.asset(
                         'assets/images/cactus.png',
-                        width: 50,
+                        width: widthPlant1,
                       )),
                 ),
               ),
