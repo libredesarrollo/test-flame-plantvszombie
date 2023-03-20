@@ -10,8 +10,31 @@ class PlantOverlay extends StatefulWidget {
   State<PlantOverlay> createState() => _PlantOverlayState();
 }
 
-class _PlantOverlayState extends State<PlantOverlay> {
+class _PlantOverlayState extends State<PlantOverlay>
+    with SingleTickerProviderStateMixin {
   double widthPlant1 = 50;
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
+
+    _controller.addListener(() {
+      if (_controller.isCompleted) {
+        _controller.reset();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +50,7 @@ class _PlantOverlayState extends State<PlantOverlay> {
                   onTap: () {
                     //widget.game.paused = !widget.game.paused;
                     setState(() {
+                      _controller.forward();
                       widget.game.setPlantSelected(pc.Plants.peaschooter);
                     });
                   },
@@ -52,11 +76,20 @@ class _PlantOverlayState extends State<PlantOverlay> {
                           ),
                         ),
                       ),
-                      AnimatedContainer(
-                        duration: const Duration(seconds: 2),
-                        width: 60,
-                        height: 30, //55,
-                        color: const Color.fromARGB(80, 255, 255, 255),
+                      AnimatedBuilder(
+                        animation: _controller,
+                        builder: (context, child) {
+                          return Container(
+                            width: 60,
+                            height: _controller.value * 55, //55,
+                            color: const Color.fromARGB(80, 255, 255, 255),
+                          );
+                        },
+                        child: Container(
+                          width: 60,
+                          height: 30, //55,
+                          color: const Color.fromARGB(80, 255, 255, 255),
+                        ),
                       )
                     ],
                   )),
