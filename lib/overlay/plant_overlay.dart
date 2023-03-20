@@ -10,8 +10,58 @@ class PlantOverlay extends StatefulWidget {
   State<PlantOverlay> createState() => _PlantOverlayState();
 }
 
-class _PlantOverlayState extends State<PlantOverlay>
-    with SingleTickerProviderStateMixin {
+class _PlantOverlayState extends State<PlantOverlay> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              _Plant(
+                game: widget.game,
+                imageAsset: 'assets/images/peashooter.png',
+                selected: widget.game.plantSelected == pc.Plants.peaschooter,
+                plant: pc.Plants.peaschooter,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              _Plant(
+                game: widget.game,
+                imageAsset: 'assets/images/cactus.png',
+                selected: widget.game.plantSelected == pc.Plants.captus,
+                plant: pc.Plants.captus,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Plant extends StatefulWidget {
+  final MyGame game;
+  final pc.Plants plant;
+  final bool selected;
+  final String imageAsset;
+
+  const _Plant(
+      {super.key,
+      required this.game,
+      required this.plant,
+      required this.imageAsset,
+      required this.selected});
+
+  @override
+  State<_Plant> createState() => __PlantState();
+}
+
+class __PlantState extends State<_Plant> with SingleTickerProviderStateMixin {
   double widthPlant1 = 50;
   late AnimationController _controller;
 
@@ -38,114 +88,47 @@ class _PlantOverlayState extends State<PlantOverlay>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              GestureDetector(
-                  onTap: () {
-                    //widget.game.paused = !widget.game.paused;
-                    setState(() {
-                      _controller.forward();
-                      widget.game.setPlantSelected(pc.Plants.peaschooter);
-                    });
-                  },
-                  child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      Opacity(
-                        opacity: pc.PlantCost.cost(pc.Plants.peaschooter) <=
-                                widget.game.suns
-                            ? 1
-                            : 0.5,
-                        child: Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: widget.game.plantSelected ==
-                                          pc.Plants.peaschooter
-                                      ? 5
-                                      : 0,
-                                  color: Colors.blueGrey)),
-                          child: Image.asset(
-                            'assets/images/peashooter.png',
-                            width: 50,
-                          ),
-                        ),
-                      ),
-                      AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, child) {
-                          return Container(
-                            width: 60,
-                            height: _controller.value * 55, //55,
-                            color: const Color.fromARGB(80, 255, 255, 255),
-                          );
-                        },
-                        child: Container(
-                          width: 60,
-                          height: 30, //55,
-                          color: const Color.fromARGB(80, 255, 255, 255),
-                        ),
-                      )
-                    ],
-                  )),
-              const SizedBox(
-                width: 5,
-              ),
-              Opacity(
-                opacity: pc.PlantCost.cost(pc.Plants.captus) <= widget.game.suns
-                    ? 1
-                    : 0.5,
-                child: Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                          width: widget.game.plantSelected == pc.Plants.captus
-                              ? 5
-                              : 0,
-                          color: Colors.blueGrey)),
-                  child: GestureDetector(
-                      onTap: () {
-                        widget.game.setPlantSelected(pc.Plants.captus);
-                      },
-                      child: Image.asset(
-                        'assets/images/cactus.png',
-                        width: widthPlant1,
-                      )),
+    return GestureDetector(
+        onTap: () {
+          //widget.game.paused = !widget.game.paused;
+          setState(() {
+            _controller.forward();
+            widget.game.setPlantSelected(widget.plant);
+          });
+        },
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: [
+            Opacity(
+              opacity:
+                  pc.PlantCost.cost(widget.plant) <= widget.game.suns ? 1 : 0.5,
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        width: widget.selected ? 5 : 0,
+                        color: Colors.blueGrey)),
+                child: Image.asset(
+                  widget.imageAsset,
+                  width: 50,
                 ),
               ),
-            ],
-          ),
-          // Row(
-          //   children: [
-          //     const SizedBox(
-          //       width: 10,
-          //     ),
-          //     Icon(
-          //       widget.game.colisionMeteors >= 3
-          //           ? Icons.favorite_border
-          //           : Icons.favorite,
-          //       color: Colors.red,
-          //     ),
-          //     Icon(
-          //       widget.game.colisionMeteors >= 2
-          //           ? Icons.favorite_border
-          //           : Icons.favorite,
-          //       color: Colors.red,
-          //     ),
-          //     Icon(
-          //       widget.game.colisionMeteors >= 1
-          //           ? Icons.favorite_border
-          //           : Icons.favorite,
-          //       color: Colors.red,
-          //     )
-          //   ],
-          // )
-        ],
-      ),
-    );
+            ),
+            AnimatedBuilder(
+              animation: _controller,
+              builder: (context, child) {
+                return Container(
+                  width: 60,
+                  height: _controller.value * 55, //55,
+                  color: const Color.fromARGB(80, 255, 255, 255),
+                );
+              },
+              child: Container(
+                width: 60,
+                height: 30, //55,
+                color: const Color.fromARGB(80, 255, 255, 255),
+              ),
+            )
+          ],
+        ));
   }
 }
