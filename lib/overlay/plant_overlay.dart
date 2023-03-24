@@ -70,6 +70,7 @@ class __PlantState extends State<_Plant> with SingleTickerProviderStateMixin {
     _controller.addListener(() {
       if (_controller.isCompleted) {
         _controller.reset();
+        widget.game.plantAddedInMap = null;
       }
     });
 
@@ -85,7 +86,6 @@ class __PlantState extends State<_Plant> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     if (widget.game.plantAddedInMap == widget.plant) {
-      widget.game.plantAddedInMap = null;
       _controller.forward();
     }
 

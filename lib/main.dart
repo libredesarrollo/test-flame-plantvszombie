@@ -40,7 +40,6 @@ class MyGame extends FlameGame
   bool addPlant(Vector2 position, Vector2 sizeSeed) {
     late PlantComponent p;
 
-    // TODO probar XXX
     if (plantAddedInMap != null) {
       // no agregar la planta seleccionada
       return false;
