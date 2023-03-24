@@ -12,7 +12,7 @@ import 'dart:math';
 
 enum State { idle, shoot }
 
-enum Plants { peaschooter, captus }
+enum Plants { peashooter, cactus }
 
 class PlantCost {
   static const peaschooter = 20;
@@ -20,9 +20,9 @@ class PlantCost {
 
   static int cost(Plants plant) {
     switch (plant) {
-      case Plants.peaschooter:
+      case Plants.peashooter:
         return peaschooter;
-      case Plants.captus:
+      case Plants.cactus:
         return cactus;
     }
   }
