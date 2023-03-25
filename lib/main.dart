@@ -14,6 +14,7 @@ import 'package:plantsvszombie/helpers/enemies/movements.dart';
 import 'package:plantsvszombie/maps/tile_map_component.dart';
 import 'package:plantsvszombie/overlay/plant_overlay.dart';
 import 'package:plantsvszombie/overlay/sun_overlay.dart';
+import 'package:plantsvszombie/overlay/main_menu_overlay.dart';
 
 class MyGame extends FlameGame
     with HasCollisionDetection, HasTappables /*TapDetector*/ {
@@ -155,8 +156,11 @@ void main() {
       },
       'Sun': (context, MyGame game) {
         return SunOverlay(game: game);
+      },
+      'MainMenu': (context, MyGame game) {
+        return MainMenuOverlay(game: game);
       }
     },
-    initialActiveOverlays: const ['Plant', 'Sun'],
+    initialActiveOverlays: const ['Plant', 'Sun', "MainMenu"],
   ));
 }
