@@ -22,12 +22,20 @@ class MyGame extends FlameGame
   double elapsepTime = 0;
   double elapsepTimeSun = 0;
   int zombieI = 0;
-  int suns = 50;
+  int suns = 500;
   Plants plantSelected = Plants.peashooter;
-  Plants? plantAddedInMap;
+  //Plants? plantAddedInMap;
+
+  final List<bool> plantsAddedInMap = [false, false];
 
   @override
   void onLoad() {
+    print(Plants.peashooter.index);
+    print(Plants.cactus.index);
+
+    plantsAddedInMap.add(true);
+    print(plantsAddedInMap.length);
+
     background = TileMapComponent(game: this);
     add(background);
 
@@ -40,7 +48,7 @@ class MyGame extends FlameGame
   bool addPlant(Vector2 position, Vector2 sizeSeed) {
     late PlantComponent p;
 
-    if (plantAddedInMap != null) {
+    if (plantsAddedInMap[plantSelected.index]) {
       // no agregar la planta seleccionada
       return false;
     }
@@ -49,7 +57,7 @@ class MyGame extends FlameGame
       return false;
     }
 
-    plantAddedInMap = plantSelected;
+    plantsAddedInMap[plantSelected.index] = true;
     if (plantSelected == Plants.peashooter) {
       p = PeashooterComponent(sizeMap: background.tiledMap.size)
         ..position = Vector2(position.x, position.y);

@@ -65,12 +65,12 @@ class __PlantState extends State<_Plant> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     _controller =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+        AnimationController(duration: const Duration(seconds: 20), vsync: this);
 
     _controller.addListener(() {
       if (_controller.isCompleted) {
         _controller.reset();
-        widget.game.plantAddedInMap = null;
+        widget.game.plantsAddedInMap[widget.plant.index] = false;
       }
     });
 
@@ -85,7 +85,7 @@ class __PlantState extends State<_Plant> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.game.plantAddedInMap == widget.plant) {
+    if (widget.game.plantsAddedInMap[widget.plant.index]) {
       _controller.forward();
     }
 
