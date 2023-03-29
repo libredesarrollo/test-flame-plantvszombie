@@ -4,11 +4,13 @@ import 'package:plantsvszombie/components/plants/cactus_component.dart';
 import 'package:plantsvszombie/components/plants/peashooter_component.dart';
 import 'package:plantsvszombie/components/plants/projectile_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
+import 'package:plantsvszombie/main.dart';
 import 'package:plantsvszombie/maps/seed_component.dart';
 
 const double alignZombie = 10;
 
-class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
+class ZombieComponent extends SpriteAnimationComponent
+    with CollisionCallbacks, HasGameRef<MyGame> {
   late SpriteAnimation walkingAnimation, walkingHurtAnimation, eatingAnimation;
 
   double speed = 12;
@@ -31,6 +33,11 @@ class ZombieComponent extends SpriteAnimationComponent with CollisionCallbacks {
 
   @override
   void update(double dt) {
+    if (gameRef.resetGame) {
+      print('REMOVER');
+      removeFromParent();
+    }
+
     if (!isAttacking) position.add(Vector2(-dt * speed, 0));
 
     if (position.x <= -size.x) {

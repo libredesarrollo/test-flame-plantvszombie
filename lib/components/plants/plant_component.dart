@@ -5,6 +5,7 @@ import 'package:flame/sprite.dart';
 
 import 'package:plantsvszombie/components/plants/projectile_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
+import 'package:plantsvszombie/main.dart';
 
 import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
 
@@ -29,7 +30,7 @@ class PlantCost {
 }
 
 class PlantComponent extends SpriteAnimationComponent
-    with KeyboardHandler, CollisionCallbacks {
+    with KeyboardHandler, CollisionCallbacks, HasGameRef<MyGame> {
   double spriteSheetWidth = 128, spriteSheetHeight = 128;
 
   late SpriteAnimation idleAnimation, shootAnimation;
@@ -54,6 +55,13 @@ class PlantComponent extends SpriteAnimationComponent
 
   @override
   void update(double dt) async {
+    if (gameRef.resetGame) {
+      print('REMOVER');
+      removeFromParent();
+    } else {
+      print('no REMOVER');
+    }
+
     if (enemiesInChannel[(position.y / sizeTileMap).toInt() - 1]) {
       // hay enemigos en en canal
       if (state != State.shoot) {

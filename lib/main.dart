@@ -20,6 +20,7 @@ class MyGame extends FlameGame
     with HasCollisionDetection, HasTappables /*TapDetector*/ {
   late TileMapComponent background;
 
+  bool resetGame = false;
   double elapsepTime = 0;
   double elapsepTimeSun = 0;
   int zombieI = 0;
@@ -94,6 +95,11 @@ class MyGame extends FlameGame
     _refreshOverlaySun();
   }
 
+  reset() {
+    suns = 50;
+    zombieI = 0;
+  }
+
   bool removeSuns(int sun) {
     if (suns - sun >= 0) {
       suns -= sun;
@@ -132,6 +138,7 @@ class MyGame extends FlameGame
                   enemiesMap1[zombieI].position - alignZombie)));
         }
         zombieI++;
+        if (zombieI > 3) resetGame = true;
       }
       elapsepTime = 0;
     }
