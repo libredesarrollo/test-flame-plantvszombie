@@ -31,6 +31,7 @@ class _PlantOverlayState extends State<PlantOverlay> {
             ),
             _Plant(
               game: widget.game,
+              duration: const Duration(seconds: 4),
               selected: widget.game.plantSelected == pc.Plants.cactus,
               plant: pc.Plants.cactus,
               imageAsset: 'assets/images/cactus.png',
@@ -45,12 +46,14 @@ class _PlantOverlayState extends State<PlantOverlay> {
 class _Plant extends StatefulWidget {
   final MyGame game;
   final pc.Plants plant;
+  final Duration duration;
   final bool selected;
   final String imageAsset;
 
   const _Plant(
       {super.key,
       required this.game,
+      this.duration = const Duration(milliseconds: 1500),
       required this.plant,
       required this.imageAsset,
       required this.selected});
@@ -64,8 +67,7 @@ class __PlantState extends State<_Plant> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
-    _controller =
-        AnimationController(duration: const Duration(seconds: 20), vsync: this);
+    _controller = AnimationController(duration: widget.duration, vsync: this);
 
     _controller.addListener(() {
       if (_controller.isCompleted) {
@@ -89,38 +91,44 @@ class __PlantState extends State<_Plant> with SingleTickerProviderStateMixin {
       _controller.forward();
     }
 
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
+    return
+        // Stack(
+        //   alignment: Alignment.bottomCenter,
+        //   children: [
         Opacity(
-          opacity:
-              pc.PlantCost.cost(widget.plant) <= widget.game.suns ? 1 : 0.5,
-          child: Container(
-            decoration: BoxDecoration(
-                border: Border.all(
-                    width: widget.selected ? 5 : 0, color: Colors.blueGrey)),
-            child: GestureDetector(
-              onTap: () {
-                widget.game.setPlantSelected(widget.plant);
-              },
-              child: Image.asset(
+      opacity: pc.PlantCost.cost(widget.plant) <= widget.game.suns ? 1 : 0.5,
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(
+                width: widget.selected ? 5 : 0, color: Colors.blueGrey)),
+        child: GestureDetector(
+          onTap: () {
+            widget.game.setPlantSelected(widget.plant);
+          },
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Image.asset(
                 widget.imageAsset,
                 width: 50,
               ),
-            ),
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (context, child) {
+                  return Container(
+                    width: 50,
+                    height: 55 * _controller.value,
+                    color: const Color.fromARGB(125, 255, 255, 255),
+                  );
+                },
+              )
+            ],
           ),
         ),
-        AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return Container(
-              width: 60,
-              height: 55 * _controller.value,
-              color: const Color.fromARGB(125, 255, 255, 255),
-            );
-          },
-        )
-      ],
+      ),
     );
+
+    //   ],
+    // );
   }
 }

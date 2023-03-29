@@ -23,7 +23,7 @@ class MyGame extends FlameGame
   double elapsepTime = 0;
   double elapsepTimeSun = 0;
   int zombieI = 0;
-  int suns = 500;
+  int suns = 50;
   Plants plantSelected = Plants.peashooter;
   //Plants? plantAddedInMap;
 
@@ -161,6 +161,6 @@ void main() {
         return MainMenuOverlay(game: game);
       }
     },
-    initialActiveOverlays: const ['Plant', 'Sun', "MainMenu"],
+    initialActiveOverlays: const ['Plant', 'Sun' /*, "MainMenu"*/],
   ));
 }
