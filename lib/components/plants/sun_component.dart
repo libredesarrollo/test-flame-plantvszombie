@@ -12,10 +12,11 @@ import 'package:plantsvszombie/main.dart';
 
 import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
 
-class SunComponent extends SpriteAnimationComponent with Tappable {
-  MyGame game;
+class SunComponent extends SpriteAnimationComponent
+    with Tappable, HasGameRef<MyGame> {
+  //MyGame game;
 
-  SunComponent({required this.game}) : super() {
+  SunComponent(/*{required this.game}*/) : super() {
     debugMode = true;
   }
 
@@ -59,6 +60,10 @@ class SunComponent extends SpriteAnimationComponent with Tappable {
   @override
   void update(double dt) {
     super.update(dt);
+
+    if (gameRef.resetGame) {
+      removeFromParent();
+    }
 
     // position.y += circleSpeed * dt;
     // print(position.y);

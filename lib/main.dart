@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:plantsvszombie/components/zombies/zombie_door_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
 import 'package:plantsvszombie/maps/tile_map_component.dart';
 import 'package:plantsvszombie/overlay/plant_overlay.dart';
+import 'package:plantsvszombie/overlay/stadistics_overlay.dart';
 import 'package:plantsvszombie/overlay/sun_overlay.dart';
 import 'package:plantsvszombie/overlay/main_menu_overlay.dart';
 
@@ -32,11 +34,7 @@ class MyGame extends FlameGame
 
   @override
   void onLoad() {
-    print(Plants.peashooter.index);
-    print(Plants.cactus.index);
-
     plantsAddedInMap.add(true);
-    print(plantsAddedInMap.length);
 
     background = TileMapComponent(game: this);
     add(background);
@@ -96,8 +94,18 @@ class MyGame extends FlameGame
   }
 
   reset() {
+    resetGame = true;
+    Timer(const Duration(milliseconds: 300), () {
+      init();
+    });
+  }
+
+  init() {
     suns = 50;
     zombieI = 0;
+    resetGame = false;
+    _refreshOverlaySun();
+    _refreshOverlayPlant();
   }
 
   bool removeSuns(int sun) {
@@ -121,7 +129,7 @@ class MyGame extends FlameGame
   void update(double dt) {
     if (elapsepTimeSun > 2) {
       elapsepTimeSun = 0;
-      add(SunComponent(game: this));
+      add(SunComponent(/*game: this*/));
     }
 
     elapsepTimeSun += dt;
@@ -138,7 +146,7 @@ class MyGame extends FlameGame
                   enemiesMap1[zombieI].position - alignZombie)));
         }
         zombieI++;
-        if (zombieI > 3) resetGame = true;
+        // if (zombieI > 3) resetGame = true;
       }
       elapsepTime = 0;
     }
@@ -166,8 +174,17 @@ void main() {
       },
       'MainMenu': (context, MyGame game) {
         return MainMenuOverlay(game: game);
-      }
+      },
+      'Statistics': (context, MyGame game) {
+        return StatisticsOverlay(
+          game: game,
+        );
+      },
     },
-    initialActiveOverlays: const ['Plant', 'Sun' /*, "MainMenu"*/],
+    initialActiveOverlays: const [
+      'Plant',
+      'Sun',
+      'Statistics' /*, "MainMenu"*/
+    ],
   ));
 }

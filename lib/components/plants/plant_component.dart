@@ -56,10 +56,7 @@ class PlantComponent extends SpriteAnimationComponent
   @override
   void update(double dt) async {
     if (gameRef.resetGame) {
-      print('REMOVER');
       removeFromParent();
-    } else {
-      print('no REMOVER');
     }
 
     if (enemiesInChannel[(position.y / sizeTileMap).toInt() - 1]) {

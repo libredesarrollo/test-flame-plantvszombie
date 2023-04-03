@@ -91,11 +91,7 @@ class __PlantState extends State<_Plant> with SingleTickerProviderStateMixin {
       _controller.forward();
     }
 
-    return
-        // Stack(
-        //   alignment: Alignment.bottomCenter,
-        //   children: [
-        Opacity(
+    return Opacity(
       opacity: pc.PlantCost.cost(widget.plant) <= widget.game.suns ? 1 : 0.5,
       child: Container(
         decoration: BoxDecoration(
@@ -127,8 +123,5 @@ class __PlantState extends State<_Plant> with SingleTickerProviderStateMixin {
         ),
       ),
     );
-
-    //   ],
-    // );
   }
 }

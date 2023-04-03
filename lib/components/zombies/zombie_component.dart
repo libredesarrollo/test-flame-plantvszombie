@@ -34,7 +34,6 @@ class ZombieComponent extends SpriteAnimationComponent
   @override
   void update(double dt) {
     if (gameRef.resetGame) {
-      print('REMOVER');
       removeFromParent();
     }
 

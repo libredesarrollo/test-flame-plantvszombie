@@ -19,10 +19,6 @@ class _StatisticsOverlayState extends State<StatisticsOverlay> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(
-                'Count colision ',
-                style: const TextStyle(color: Colors.white, fontSize: 30),
-              ),
               const Expanded(
                 child: SizedBox(
                   height: 10,
@@ -41,37 +37,12 @@ class _StatisticsOverlayState extends State<StatisticsOverlay> {
                       size: 40)),
               GestureDetector(
                   onTap: () {
-                    //widget.game.player.reset();
+                    widget.game.reset();
                   },
                   child:
                       const Icon(Icons.replay, color: Colors.white, size: 40)),
             ],
           ),
-          // Row(
-          //   children: [
-          //     const SizedBox(
-          //       width: 10,
-          //     ),
-          //     Icon(
-          //       widget.game.colisionMeteors >= 3
-          //           ? Icons.favorite_border
-          //           : Icons.favorite,
-          //       color: Colors.red,
-          //     ),
-          //     Icon(
-          //       widget.game.colisionMeteors >= 2
-          //           ? Icons.favorite_border
-          //           : Icons.favorite,
-          //       color: Colors.red,
-          //     ),
-          //     Icon(
-          //       widget.game.colisionMeteors >= 1
-          //           ? Icons.favorite_border
-          //           : Icons.favorite,
-          //       color: Colors.red,
-          //     )
-          //   ],
-          // )
         ],
       ),
     );
