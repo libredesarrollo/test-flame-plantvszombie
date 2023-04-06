@@ -1,5 +1,11 @@
+import 'dart:async';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flame_audio/flame_audio.dart';
+
 import 'package:plantsvszombie/components/plants/cactus_component.dart';
 import 'package:plantsvszombie/components/plants/peashooter_component.dart';
 import 'package:plantsvszombie/components/plants/projectile_component.dart';
@@ -26,14 +32,26 @@ class ZombieComponent extends SpriteAnimationComponent
   bool attack = false;
   double elapsedTimeAttaking = 0;
 
+  late AudioPlayer audioWalk;
+
   ZombieComponent(position) : super(position: position) {
     debugMode = true;
     scale = Vector2.all(1);
   }
 
   @override
+  FutureOr<void> onLoad() {
+    FlameAudio.loop('zombie2.wav').then((audioPlayer) {
+      audioWalk = audioPlayer;
+    });
+
+    return super.onLoad();
+  }
+
+  @override
   void update(double dt) {
     if (gameRef.resetGame) {
+      audioWalk.dispose();
       removeFromParent();
     }
 
@@ -44,6 +62,7 @@ class ZombieComponent extends SpriteAnimationComponent
       // el zombie llego al final
 
       _setChannel(false);
+      audioWalk.dispose();
       removeFromParent();
     }
 
@@ -81,6 +100,7 @@ class ZombieComponent extends SpriteAnimationComponent
         animation = walkingHurtAnimation;
       }
       if (life <= 0) {
+        audioWalk.dispose();
         removeFromParent();
       }
     }
