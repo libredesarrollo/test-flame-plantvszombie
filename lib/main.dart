@@ -3,6 +3,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flame_audio/flame_audio.dart';
+
 import 'package:flame/game.dart';
 import 'package:plantsvszombie/components/plants/cactus_component.dart';
 import 'package:plantsvszombie/components/plants/peashooter_component.dart';
@@ -28,6 +31,8 @@ class MyGame extends FlameGame
   int zombieI = 0;
   int suns = 50;
   Plants plantSelected = Plants.peashooter;
+
+  late AudioPlayer audioWalk;
   //Plants? plantAddedInMap;
 
   final List<bool> plantsAddedInMap = [false, false];
@@ -125,6 +130,17 @@ class MyGame extends FlameGame
     return Colors.purple;
   }
 
+  _zombieWalkAudio() {
+    if (audioWalk != null) {
+      FlameAudio.loop(
+        'zombies_many',
+        volume: .5,
+      ).then((audioPlayer) {
+        audioWalk = audioPlayer;
+      });
+    }
+  }
+
   @override
   void update(double dt) {
     if (elapsepTimeSun > 2) {
@@ -136,6 +152,8 @@ class MyGame extends FlameGame
 
     if (elapsepTime > 3.0) {
       if (zombieI < enemiesMap1.length) {
+        // _zombieWalkAudio() xxx
+
         if (enemiesMap1[zombieI].typeEnemy == TypeEnemy.zombie1) {
           add(ZombieConeComponent(
               position: Vector2(background.tiledMap.size.x,
