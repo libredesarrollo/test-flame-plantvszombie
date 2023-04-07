@@ -33,6 +33,7 @@ class ZombieComponent extends SpriteAnimationComponent
   double elapsedTimeAttaking = 0;
 
   late AudioPlayer audioWalk;
+  String audioWalkSound = 'zombie1.wav';
 
   ZombieComponent(position) : super(position: position) {
     debugMode = true;
@@ -41,7 +42,10 @@ class ZombieComponent extends SpriteAnimationComponent
 
   @override
   FutureOr<void> onLoad() {
-    FlameAudio.loop('zombie2.wav').then((audioPlayer) {
+    FlameAudio.loop(
+      audioWalkSound,
+      volume: .5,
+    ).then((audioPlayer) {
       audioWalk = audioPlayer;
     });
 
@@ -51,7 +55,7 @@ class ZombieComponent extends SpriteAnimationComponent
   @override
   void update(double dt) {
     if (gameRef.resetGame) {
-      audioWalk.dispose();
+      //audioWalk.dispose();
       removeFromParent();
     }
 
@@ -62,7 +66,7 @@ class ZombieComponent extends SpriteAnimationComponent
       // el zombie llego al final
 
       _setChannel(false);
-      audioWalk.dispose();
+      //audioWalk.dispose();
       removeFromParent();
     }
 
@@ -100,7 +104,7 @@ class ZombieComponent extends SpriteAnimationComponent
         animation = walkingHurtAnimation;
       }
       if (life <= 0) {
-        audioWalk.dispose();
+        //audioWalk.dispose();
         removeFromParent();
       }
     }
@@ -134,6 +138,7 @@ class ZombieComponent extends SpriteAnimationComponent
   @override
   void onRemove() {
     _setChannel(false);
+    audioWalk.dispose();
     super.onRemove();
   }
 
