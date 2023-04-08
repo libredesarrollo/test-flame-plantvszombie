@@ -10,9 +10,8 @@ class BehaviorEnemy {
 }
 
 //
-
+// Mapa 1
 const channelsMap1 = 7;
-
 List<BehaviorEnemy> enemiesMap1 = [
   BehaviorEnemy(typeEnemy: TypeEnemy.zombie1, position: 4 * sizeTileMap),
   BehaviorEnemy(typeEnemy: TypeEnemy.zombie2, position: 1 * sizeTileMap),
@@ -24,4 +23,5 @@ List<BehaviorEnemy> enemiesMap1 = [
   // BehaviorEnemy(typeEnemy: TypeEnemy.zombie2, position: 7 * sizeTileMap),
 ];
 
+int countEnemiesInMap = 0;
 List enemiesInChannel = List.generate(channelsMap1, (index) => false);

@@ -53,6 +53,12 @@ class ZombieComponent extends SpriteAnimationComponent
   // }
 
   @override
+  FutureOr<void> onLoad() {
+    countEnemiesInMap++;
+    return super.onLoad();
+  }
+
+  @override
   void update(double dt) {
     if (gameRef.resetGame) {
       //audioWalk.dispose();
@@ -137,6 +143,7 @@ class ZombieComponent extends SpriteAnimationComponent
 
   @override
   void onRemove() {
+    countEnemiesInMap--;
     _setChannel(false);
     // audioWalk.dispose();
     super.onRemove();

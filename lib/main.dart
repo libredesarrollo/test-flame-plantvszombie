@@ -28,14 +28,28 @@ class MyGame extends FlameGame
   bool resetGame = false;
   double elapsepTime = 0;
   double elapsepTimeSun = 0;
+
   int zombieI = 0;
   int suns = 50;
+
   Plants plantSelected = Plants.peashooter;
 
   late AudioPlayer audioWalk;
+
+  bool endGame = false;
   //Plants? plantAddedInMap;
 
   final List<bool> plantsAddedInMap = [false, false];
+
+  void checkEndGame() {
+    if (zombieI >= enemiesMap1.length - 1) {
+      // revisamos si todos los zombies del mapa actual fueron cargados en el mapa
+      if (countEnemiesInMap == 0) {
+        // revisamos si todos los zombies fueron vencidos
+        print('fin del juego');
+      }
+    }
+  }
 
   @override
   void onLoad() {
@@ -109,6 +123,7 @@ class MyGame extends FlameGame
     suns = 50;
     zombieI = 0;
     resetGame = false;
+    endGame = false;
     _refreshOverlaySun();
     _refreshOverlayPlant();
   }
@@ -131,14 +146,12 @@ class MyGame extends FlameGame
   }
 
   _zombieWalkAudio() {
-    if (audioWalk != null) {
-      FlameAudio.loop(
-        'zombies_many',
-        volume: .5,
-      ).then((audioPlayer) {
-        audioWalk = audioPlayer;
-      });
-    }
+    FlameAudio.loop(
+      'zombies_many',
+      volume: .5,
+    ).then((audioPlayer) {
+      audioWalk = audioPlayer;
+    });
   }
 
   @override
@@ -148,11 +161,13 @@ class MyGame extends FlameGame
       add(SunComponent(/*game: this*/));
     }
 
+    checkEndGame();
+
     elapsepTimeSun += dt;
 
     if (elapsepTime > 3.0) {
       if (zombieI < enemiesMap1.length) {
-        // _zombieWalkAudio() xxx
+        if (zombieI == 0) _zombieWalkAudio();
 
         if (enemiesMap1[zombieI].typeEnemy == TypeEnemy.zombie1) {
           add(ZombieConeComponent(
