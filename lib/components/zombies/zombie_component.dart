@@ -19,7 +19,7 @@ class ZombieComponent extends SpriteAnimationComponent
     with CollisionCallbacks, HasGameRef<MyGame> {
   late SpriteAnimation walkingAnimation, walkingHurtAnimation, eatingAnimation;
 
-  double speed = 12;
+  double speed = 50;
 
   double spriteSheetWidth = 128, spriteSheetHeight = 128;
 
@@ -144,6 +144,7 @@ class ZombieComponent extends SpriteAnimationComponent
   @override
   void onRemove() {
     countEnemiesInMap--;
+    print("onRemoveonRemoveonRemove");
     _setChannel(false);
     // audioWalk.dispose();
     super.onRemove();

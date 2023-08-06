@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -22,7 +24,10 @@ import 'package:plantsvszombie/overlay/sun_overlay.dart';
 import 'package:plantsvszombie/overlay/main_menu_overlay.dart';
 
 class MyGame extends FlameGame
-    with HasCollisionDetection, HasTappables /*TapDetector*/ {
+    with
+        HasCollisionDetection,
+        HasDraggablesBridge,
+        HasTappablesBridge /*TapDetector*/ {
   late TileMapComponent background;
 
   bool resetGame = false;
@@ -31,6 +36,10 @@ class MyGame extends FlameGame
 
   int zombieI = 0;
   int suns = 50;
+
+  final world = World();
+
+  late final CameraComponent cameraComponent;
 
   Plants plantSelected = Plants.peashooter;
 
@@ -47,6 +56,8 @@ class MyGame extends FlameGame
       if (countEnemiesInMap == 0) {
         // revisamos si todos los zombies fueron vencidos
         print('fin del juego');
+        audioWalk.dispose();
+        paused = true;
       }
     }
   }
@@ -54,9 +65,17 @@ class MyGame extends FlameGame
   @override
   void onLoad() {
     plantsAddedInMap.add(true);
+    add(world);
 
-    background = TileMapComponent(game: this);
-    add(background);
+    background = TileMapComponent(game2: this);
+    world.add(background);
+
+    cameraComponent = CameraComponent(world: world);
+    cameraComponent.viewfinder.anchor = Anchor.topLeft;
+
+    // cameraComponent.follow()
+
+    add(cameraComponent);
 
     // add(ZombieConeComponent(position: Vector2(1200,48)));
     // add(ZombieDoorComponent(position: Vector2(1200,96)));
@@ -66,6 +85,9 @@ class MyGame extends FlameGame
 
   bool addPlant(Vector2 position, Vector2 sizeSeed) {
     late PlantComponent p;
+    print(cameraComponent.viewfinder.position.toString() +
+        "cameraComponent.viewfinder.position");
+    // position += cameraComponent.viewfinder.position;
 
     if (plantsAddedInMap[plantSelected.index]) {
       // no agregar la planta seleccionada
@@ -87,7 +109,7 @@ class MyGame extends FlameGame
 
     var fac = sizeSeed.y / p.size.y;
     p.size *= fac;
-    add(p);
+    world.add(p);
 
     return true;
   }
@@ -114,9 +136,9 @@ class MyGame extends FlameGame
 
   reset() {
     resetGame = true;
-    Timer(const Duration(milliseconds: 300), () {
-      init();
-    });
+    // Timer(const Duration(milliseconds: 300), () {
+    //   init();
+    // });
   }
 
   init() {
@@ -146,8 +168,9 @@ class MyGame extends FlameGame
   }
 
   _zombieWalkAudio() {
+    print("sasasasasasasas");
     FlameAudio.loop(
-      'zombies_many',
+      'zombies_many.wav',
       volume: .5,
     ).then((audioPlayer) {
       audioWalk = audioPlayer;
@@ -158,7 +181,7 @@ class MyGame extends FlameGame
   void update(double dt) {
     if (elapsepTimeSun > 2) {
       elapsepTimeSun = 0;
-      add(SunComponent(/*game: this*/));
+      world.add(SunComponent(/*game: this*/));
     }
 
     checkEndGame();
@@ -167,14 +190,14 @@ class MyGame extends FlameGame
 
     if (elapsepTime > 3.0) {
       if (zombieI < enemiesMap1.length) {
-        if (zombieI == 0) _zombieWalkAudio();
+        // if (zombieI == 0) _zombieWalkAudio();
 
         if (enemiesMap1[zombieI].typeEnemy == TypeEnemy.zombie1) {
-          add(ZombieConeComponent(
+          world.add(ZombieConeComponent(
               position: Vector2(background.tiledMap.size.x,
                   enemiesMap1[zombieI].position - alignZombie)));
         } else {
-          add(ZombieDoorComponent(
+          world.add(ZombieDoorComponent(
               position: Vector2(background.tiledMap.size.x,
                   enemiesMap1[zombieI].position - alignZombie)));
         }

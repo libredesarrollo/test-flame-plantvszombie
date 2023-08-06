@@ -2,17 +2,18 @@ import 'dart:async';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/input.dart';
 import 'package:plantsvszombie/main.dart';
 
-class SeedComponent extends PositionComponent with Tappable {
+class SeedComponent extends PositionComponent with TapCallbacks {
   MyGame game;
   bool sown = false;
   bool busy = false;
 
   SeedComponent({required size, required position, required this.game})
       : super(size: size, position: position) {
-    debugMode = false;
+    debugMode = true;
     add(RectangleHitbox()..collisionType = CollisionType.active);
   }
 
@@ -22,7 +23,7 @@ class SeedComponent extends PositionComponent with Tappable {
   }
 
   @override
-  bool onTapDown(TapDownInfo info) {
+  void onTapDown(TapDownEvent event) {
     if (!sown & !busy) {
       // game.addPlant(info.raw.localPosition);
       Vector2 auxPos = position;
@@ -33,6 +34,6 @@ class SeedComponent extends PositionComponent with Tappable {
         sown = true;
       }
     }
-    return true;
+    super.onTapDown(event);
   }
 }

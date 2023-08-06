@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import 'package:plantsvszombie/main.dart';
 import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
 
 class SunComponent extends SpriteAnimationComponent
-    with Tappable, HasGameRef<MyGame> {
+    with TapCallbacks, HasGameRef<MyGame> {
   //MyGame game;
 
   SunComponent(/*{required this.game}*/) : super() {
@@ -77,10 +78,10 @@ class SunComponent extends SpriteAnimationComponent
   }
 
   @override
-  bool onTapDown(TapDownInfo info) {
+  void onTapDown(TapDownEvent event) {
     removeFromParent();
     game.addSuns(5);
-    return false;
+    super.onTapDown(event);
   }
 
   // @override
