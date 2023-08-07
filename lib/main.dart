@@ -26,7 +26,7 @@ class MyGame extends FlameGame
         HasCollisionDetection,
         HasDraggablesBridge,
         HasTappablesBridge /*TapDetector*/ {
-  late TileMapComponent background;
+  TileMapComponent? background;
 
   bool resetGame = false;
   double elapsepTime = 0;
@@ -34,6 +34,7 @@ class MyGame extends FlameGame
 
   int zombieI = 0;
   int suns = 50;
+  double factScale = 1.0;
 
   final world = World();
 
@@ -67,7 +68,7 @@ class MyGame extends FlameGame
 
     world.add(BackgroundComponent());
     background = TileMapComponent(game2: this);
-    world.add(background);
+    world.add(background!);
 
     cameraComponent = CameraComponent(world: world);
     cameraComponent.viewfinder.anchor = Anchor.topLeft;
@@ -99,11 +100,13 @@ class MyGame extends FlameGame
 
     plantsAddedInMap[plantSelected.index] = true;
     if (plantSelected == Plants.peashooter) {
-      p = PeashooterComponent(sizeMap: background.tiledMap.size)
-        ..position = Vector2(position.x, position.y);
+      p = PeashooterComponent(sizeMap: background!.tiledMap.size)
+        ..position = Vector2(position.x, position.y)
+        ..scale = Vector2.all(factScale);
     } else {
-      p = CactusComponent(sizeMap: background.tiledMap.size)
-        ..position = Vector2(position.x, position.y);
+      p = CactusComponent(sizeMap: background!.tiledMap.size)
+        ..position = Vector2(position.x, position.y)
+        ..scale = Vector2.all(factScale);
     }
 
     var fac = sizeSeed.y / p.size.y;
@@ -180,7 +183,7 @@ class MyGame extends FlameGame
   void update(double dt) {
     if (elapsepTimeSun > 2) {
       elapsepTimeSun = 0;
-      world.add(SunComponent(/*game: this*/));
+      world.add(SunComponent(/*game: this*/)..scale = Vector2.all(factScale));
     }
 
     checkEndGame();
@@ -193,12 +196,14 @@ class MyGame extends FlameGame
 
         if (enemiesMap1[zombieI].typeEnemy == TypeEnemy.zombie1) {
           world.add(ZombieConeComponent(
-              position: Vector2(background.tiledMap.size.x,
-                  enemiesMap1[zombieI].position - alignZombie)));
+              position: Vector2(background!.tiledMap.size.x,
+                  enemiesMap1[zombieI].position - alignZombie))
+            ..scale = Vector2.all(factScale));
         } else {
           world.add(ZombieDoorComponent(
-              position: Vector2(background.tiledMap.size.x,
-                  enemiesMap1[zombieI].position - alignZombie)));
+              position: Vector2(background!.tiledMap.size.x,
+                  enemiesMap1[zombieI].position - alignZombie))
+            ..scale = Vector2.all(factScale));
         }
         zombieI++;
         // if (zombieI > 3) resetGame = true;
@@ -215,6 +220,20 @@ class MyGame extends FlameGame
   //   addPlant(info.raw.localPosition);
   //   super.onTapDown(info);
   // }
+
+  @override
+  void onGameResize(Vector2 size) {
+    // background.tiledMap.scale * fac = size.x;
+    // background.tiledMap.size.x * fac = size.x;
+
+    background?.loaded.then((value) {
+      factScale = size.x / background!.tiledMap.size.x;
+      // print(factScale);
+      background!.tiledMap.scale = Vector2.all(factScale);
+    });
+
+    super.onGameResize(size);
+  }
 }
 
 void main() {

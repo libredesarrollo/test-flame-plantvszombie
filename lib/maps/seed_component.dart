@@ -10,10 +10,17 @@ class SeedComponent extends PositionComponent with TapCallbacks {
   MyGame game;
   bool sown = false;
   bool busy = false;
+  Vector2 positionCopy = Vector2(0, 0);
 
   SeedComponent({required size, required position, required this.game})
       : super(size: size, position: position) {
     debugMode = true;
+    // scale = Vector2.all(game.factScale);
+    // scale = Vector2.all(3)
+
+    // size = Vector2.all(size.x * 3);
+    print(game.factScale.toString() + '---------');
+    positionCopy = position;
     add(RectangleHitbox()..collisionType = CollisionType.active);
   }
 
@@ -21,6 +28,20 @@ class SeedComponent extends PositionComponent with TapCallbacks {
   FutureOr<void> onLoad() {
     return super.onLoad();
   }
+
+  @override
+  void onGameResize(Vector2 size) {
+    position = positionCopy * game.factScale;
+    scale = Vector2.all(game.factScale);
+    super.onGameResize(size);
+  }
+
+  // @override
+  // void update(double dt) {
+  //   position *= game.factScale;
+
+  //   super.update(dt);
+  // }
 
   @override
   void onTapDown(TapDownEvent event) {
