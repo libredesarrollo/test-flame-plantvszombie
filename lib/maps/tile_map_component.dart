@@ -19,7 +19,7 @@ class TileMapComponent extends PositionComponent
   @override
   Future<void>? onLoad() async {
     tiledMap = await TiledComponent.load('map.tmx', Vector2.all(48));
-    game2.world.add(tiledMap);
+    add(tiledMap);
 
     // final objWater = tiledMap.tileMap.getLayer<ObjectGroup>("water_object");
 
@@ -32,7 +32,7 @@ class TileMapComponent extends PositionComponent
     final objObs = tiledMap.tileMap.getLayer<ObjectGroup>("seed");
 
     for (final obj in objObs!.objects) {
-      game2.world.add(SeedComponent(
+      add(SeedComponent(
           size: Vector2(obj.width, obj.height),
           position: Vector2(obj.x, obj.y),
           game: game2));

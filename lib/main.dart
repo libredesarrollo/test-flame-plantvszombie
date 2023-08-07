@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +14,7 @@ import 'package:plantsvszombie/components/zombies/zombie_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_cone_component.dart';
 import 'package:plantsvszombie/components/zombies/zombie_door_component.dart';
 import 'package:plantsvszombie/helpers/enemies/movements.dart';
+import 'package:plantsvszombie/maps/background_component.dart';
 import 'package:plantsvszombie/maps/tile_map_component.dart';
 import 'package:plantsvszombie/overlay/plant_overlay.dart';
 import 'package:plantsvszombie/overlay/stadistics_overlay.dart';
@@ -56,7 +54,7 @@ class MyGame extends FlameGame
       if (countEnemiesInMap == 0) {
         // revisamos si todos los zombies fueron vencidos
         print('fin del juego');
-        audioWalk.dispose();
+        //audioWalk.dispose();
         paused = true;
       }
     }
@@ -67,6 +65,7 @@ class MyGame extends FlameGame
     plantsAddedInMap.add(true);
     add(world);
 
+    world.add(BackgroundComponent());
     background = TileMapComponent(game2: this);
     world.add(background);
 

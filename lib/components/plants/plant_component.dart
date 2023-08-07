@@ -89,34 +89,34 @@ class PlantComponent extends SpriteAnimationComponent
     super.update(dt);
   }
 
-  @override
-  void onDragStart(DragStartEvent event) {
-    print('canvasPosition--' + event.canvasPosition.toString());
-    print('devicePosition--' + event.devicePosition.toString());
-    print('localPosition--' + event.localPosition.toString());
-    print('parentPosition--' + event.parentPosition.toString());
-    super.onDragStart(event);
-  }
+  // @override
+  // void onDragStart(DragStartEvent event) {
+  //   print('canvasPosition--' + event.canvasPosition.toString());
+  //   print('devicePosition--' + event.devicePosition.toString());
+  //   print('localPosition--' + event.localPosition.toString());
+  //   print('parentPosition--' + event.parentPosition.toString());
+  //   super.onDragStart(event);
+  // }
 
-  @override
-  void onDragUpdate(DragUpdateEvent event) {
-    print('canvasPosition--' + event.canvasPosition.toString());
-    print('devicePosition--' + event.devicePosition.toString());
-    print('localPosition--' + event.localPosition.toString());
-    print('parentPosition----' + event.parentPosition.toString());
-    print('event--' + event.delta.toString());
+  // @override
+  // void onDragUpdate(DragUpdateEvent event) {
+  //   print('canvasPosition--' + event.canvasPosition.toString());
+  //   print('devicePosition--' + event.devicePosition.toString());
+  //   print('localPosition--' + event.localPosition.toString());
+  //   print('parentPosition----' + event.parentPosition.toString());
+  //   print('event--' + event.delta.toString());
 
-    final camera = gameRef.firstChild<CameraComponent>()!;
-    // camera.moveBy(event.delta / camera.viewfinder.zoom);
-    camera.moveBy(event.delta);
-    // camera.viewfinder.position += (event.delta / camera.viewfinder.zoom);
-    // camera.viewport.position += (event.delta / camera.viewfinder.zoom);
-    // camera.viewport.position += (event.delta / camera.viewfinder.zoom);
-    // camera.viewport.position
+  //   final camera = gameRef.firstChild<CameraComponent>()!;
+  //   // camera.moveBy(event.delta / camera.viewfinder.zoom);
+  //   camera.moveBy(event.delta);
+  //   // camera.viewfinder.position += (event.delta / camera.viewfinder.zoom);
+  //   // camera.viewport.position += (event.delta / camera.viewfinder.zoom);
+  //   // camera.viewport.position += (event.delta / camera.viewfinder.zoom);
+  //   // camera.viewport.position
 
-    print('viewfinder--' + camera.viewfinder.position.toString());
-    super.onDragUpdate(event);
-  }
+  //   print('viewfinder--' + camera.viewfinder.position.toString());
+  //   super.onDragUpdate(event);
+  // }
 
   // @override
   // void onCollision(Set<Vector2> points, PositionComponent other) {
