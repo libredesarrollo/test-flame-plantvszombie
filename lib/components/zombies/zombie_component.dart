@@ -32,12 +32,15 @@ class ZombieComponent extends SpriteAnimationComponent
   bool attack = false;
   double elapsedTimeAttaking = 0;
 
+  Vector2 positionCopy = Vector2(0, 0);
+
   // late AudioPlayer audioWalk;
   // String audioWalkSound = 'zombie1.wav';
 
   ZombieComponent(position) : super(position: position) {
     debugMode = true;
-    scale = Vector2.all(1);
+    // scale = Vector2.all(1);
+    positionCopy = position;
   }
 
   // @override
@@ -65,7 +68,10 @@ class ZombieComponent extends SpriteAnimationComponent
       removeFromParent();
     }
 
-    if (!isAttacking) position.add(Vector2(-dt * speed, 0));
+    if (!isAttacking) {
+      position.add(Vector2(-dt * speed, 0));
+      positionCopy.add(Vector2(-dt * speed, 0));
+    }
 
     if (position.x <= -size.x) {
       //print(position.x.toString());
@@ -148,6 +154,15 @@ class ZombieComponent extends SpriteAnimationComponent
     _setChannel(false);
     // audioWalk.dispose();
     super.onRemove();
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    scale = Vector2.all(game.factScale);
+    // position.y = positionCopy.y * game.factScale;
+    // position.x = positionCopy.x * game.factScale;
+    position = positionCopy * game.factScale;
+    super.onGameResize(size);
   }
 
   @override

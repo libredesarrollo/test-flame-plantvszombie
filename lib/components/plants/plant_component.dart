@@ -52,10 +52,12 @@ class PlantComponent extends SpriteAnimationComponent
   int life = 100;
   int damage = 10;
 
-  PlantComponent(this.sizeMap) : super() {
+  Vector2 positionOriginal = Vector2(0, 0);
+
+  PlantComponent(this.sizeMap, position) : super(position: position) {
     debugMode = true;
-    scale = Vector2.all(1);
-    position = Vector2.all(200);
+    // position = Vector2.all(200);
+    positionOriginal = position;
   }
 
   @override
@@ -64,7 +66,7 @@ class PlantComponent extends SpriteAnimationComponent
       removeFromParent();
     }
 
-    if (enemiesInChannel[(position.y / sizeTileMap).toInt() - 1]) {
+    if (enemiesInChannel[(positionOriginal.y / sizeTileMap).toInt() - 1]) {
       // hay enemigos en en canal
       if (state != State.shoot) {
         animation = shootAnimation;
@@ -87,6 +89,13 @@ class PlantComponent extends SpriteAnimationComponent
     // }
 
     super.update(dt);
+  }
+
+  @override
+  void onGameResize(Vector2 size) {
+    scale = Vector2.all(game.factScale);
+    position = positionOriginal * game.factScale;
+    super.onGameResize(size);
   }
 
   // @override

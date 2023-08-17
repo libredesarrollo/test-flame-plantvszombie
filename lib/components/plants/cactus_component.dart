@@ -7,7 +7,8 @@ import 'package:plantsvszombie/utils/create_animation_by_limit.dart';
 import 'package:plantsvszombie/components/plants/plant_component.dart';
 
 class CactusComponent extends PlantComponent {
-  CactusComponent({required sizeMap}) : super(sizeMap) {
+  CactusComponent({required sizeMap, required position})
+      : super(sizeMap, position) {
     spriteSheetWidth = 39;
     spriteSheetHeight = 37;
     size = Vector2(spriteSheetWidth, spriteSheetHeight);

@@ -21,6 +21,8 @@ import 'package:plantsvszombie/overlay/stadistics_overlay.dart';
 import 'package:plantsvszombie/overlay/sun_overlay.dart';
 import 'package:plantsvszombie/overlay/main_menu_overlay.dart';
 
+import 'package:window_manager/window_manager.dart';
+
 class MyGame extends FlameGame
     with
         HasCollisionDetection,
@@ -100,13 +102,17 @@ class MyGame extends FlameGame
 
     plantsAddedInMap[plantSelected.index] = true;
     if (plantSelected == Plants.peashooter) {
-      p = PeashooterComponent(sizeMap: background!.tiledMap.size)
-        ..position = Vector2(position.x, position.y)
-        ..scale = Vector2.all(factScale);
+      p = PeashooterComponent(
+          sizeMap: background!.tiledMap.size,
+          position: Vector2(position.x, position.y));
+
+      // ..scale = Vector2.all(factScale)
     } else {
-      p = CactusComponent(sizeMap: background!.tiledMap.size)
-        ..position = Vector2(position.x, position.y)
-        ..scale = Vector2.all(factScale);
+      p = CactusComponent(
+          sizeMap: background!.tiledMap.size,
+          position: Vector2(position.x, position.y));
+
+      // ..scale = Vector2.all(factScale)
     }
 
     var fac = sizeSeed.y / p.size.y;
@@ -197,13 +203,11 @@ class MyGame extends FlameGame
         if (enemiesMap1[zombieI].typeEnemy == TypeEnemy.zombie1) {
           world.add(ZombieConeComponent(
               position: Vector2(background!.tiledMap.size.x,
-                  enemiesMap1[zombieI].position - alignZombie))
-            ..scale = Vector2.all(factScale));
+                  enemiesMap1[zombieI].position - alignZombie)));
         } else {
           world.add(ZombieDoorComponent(
               position: Vector2(background!.tiledMap.size.x,
-                  enemiesMap1[zombieI].position - alignZombie))
-            ..scale = Vector2.all(factScale));
+                  enemiesMap1[zombieI].position - alignZombie)));
         }
         zombieI++;
         // if (zombieI > 3) resetGame = true;
@@ -236,7 +240,17 @@ class MyGame extends FlameGame
   }
 }
 
-void main() {
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // // Must add this line.
+  // await windowManager.ensureInitialized();
+
+  // // Use it only after calling `hiddenWindowAtLaunch`
+  // windowManager.waitUntilReadyToShow().then((_) async {
+  //   // Hide window title bar
+  //   await windowManager.setFullScreen(true);
+  // });
+
   runApp(GameWidget(
     game: MyGame(),
     overlayBuilderMap: {

@@ -38,6 +38,7 @@ dependencies:
   flame: 
   flame_tiled:
   flame_audio: 
+  window_manager:
 
 dev_dependencies:
   flutter_test:
